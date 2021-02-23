@@ -8,8 +8,10 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@apollo/client": "^3.3.11",
     "expo": "~40.0.0",
     "expo-status-bar": "~1.0.3",
+    "graphql": "^15.5.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
@@ -17,7 +19,8 @@
     "styled-components": "^5.2.1"
   },
   "devDependencies": {
-    "@babel/core": "~7.9.0"
+    "@babel/core": "~7.9.0",
+    "babel-plugin-import-graphql": "^2.8.1"
   },
   "private": true
 }

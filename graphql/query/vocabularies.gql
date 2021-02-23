@@ -1,0 +1,16 @@
+query Vocabularies($first: Int, $level: String){
+  vocabularies(first: $first, level: $level) {
+    pageInfo{
+      endCursor
+      startCursor
+      hasNextPage
+      hasPreviousPage
+    }
+    nodes {
+      word
+      level
+      pos
+      ox5000
+    }
+  }
+}
