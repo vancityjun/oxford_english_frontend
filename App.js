@@ -1,17 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'expo-status-bar'
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { ApolloProvider } from '@apollo/client';
+import { ApolloProvider } from '@apollo/client'
+import 'react-native-gesture-handler'
 import client from './graphql/client'
-import Main from './screen/Main'
+import StackNavigator from './src/navigator'
 
 const App = () => {
   return (
-    <ApolloProvider client={client}>
-      <View>
-        <Main />
-        <StatusBar style="auto" />
-      </View>
+    <ApolloProvider client={client}>      
+      <StackNavigator />
+      <StatusBar style="auto" />
     </ApolloProvider>
   );
 }

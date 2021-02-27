@@ -1,5 +1,5 @@
-query Vocabularies($first: Int, $level: String){
-  vocabularies(first: $first, level: $level) {
+query Vocabularies($first: Int, $levels: [String]){
+  vocabularies(first: $first, levels: $levels) {
     pageInfo{
       endCursor
       startCursor
@@ -7,6 +7,7 @@ query Vocabularies($first: Int, $level: String){
       hasPreviousPage
     }
     nodes {
+      id
       word
       level
       pos
