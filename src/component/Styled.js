@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 export const globalVariable = {
-  primary_color: '#333',
+  primary_color: '#FFC915',
   dark_grey: '#3E3E3E',
   medium_grey: '#676767',
   light_grey: '#DDDDDD',
@@ -24,6 +24,7 @@ export const FlexWrap = styled.View`
   display: flex
   flex-flow: row-wrap
   align-items: baseline
+  justify-content: ${({justifyContent}) => justifyContent || 'flex-start'}
 ` 
 
 export const Item = styled(FlexWrap)`
@@ -45,7 +46,7 @@ export const TextSmall = styled(TextMedium)`
   font-size: ${font_small}
 `
 
-export const Touchable = styled.TouchableOpacity`
+export const Button = styled.TouchableOpacity`
   border: 1px solid ${dark_grey}
   padding: 2px 10px
   border-radius: 7px

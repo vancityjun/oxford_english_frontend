@@ -1,33 +1,52 @@
-import React, {useState, useEffect} from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
-import { useQuery } from '@apollo/client'
-import Vocabularies from '../../graphql/query/vocabularies.gql'
+import React, {useState, useContext, useEffect} from 'react'
+import { View, Text, FlatList, StyleSheet, Picker } from 'react-native'
+import {VocabularyContext} from '../context/vocabularyContext'
 import VocabularyItem from './VocabularyItem'
 import Levels from './Levels'
+import Dropdown from './Dropdown'
+import Pagination from './Pagination'
+import {Button, TextMedium, FlexWrap} from './Styled'
 
 
 const List = () => {
-  const [levels, setLevels] = useState([])
-  const [perPage, setPerPage] = useState(50)
-
-  const { loading, error, data } = useQuery(Vocabularies, {
-    variables: { first: perPage, levels: levels }
-  })
+  const {
+    OutputVocabularies,
+    loading,
+    error,
+    pages,
+    currentPage,
+    setCurrentPage
+  } = useContext(VocabularyContext)
 
   if (loading) return <Text>loading</Text>
   if (error) return  <Text>{error.message}</Text>
 
   return (
-    <View>
-      <Levels levels={levels} setLevels={setLevels}/>
+    <View style={styles.container}>
+      <View>
+        {/* <Dropdown /> */}
+      </View>
+      <Levels/>
       <FlatList
-        data={data.vocabularies.nodes}
+        data={OutputVocabularies}
         renderItem={VocabularyItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.cursor}
+      />
+      <Pagination 
+        pages={pages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
     </View>
   )
 }
 
+// todo: remove and improve
+const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    paddingBottom: 20
+  }
+})
 
 export default List

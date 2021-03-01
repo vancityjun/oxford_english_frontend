@@ -1,27 +1,31 @@
-import React, {useReducer, useEffect} from 'react'
+import React, {useReducer, useEffect, useContext} from 'react'
 import styled from 'styled-components/native'
-import { FlexWrap, globalVariable, Touchable, TextMedium } from './Styled'
+import { FlexWrap, globalVariable, Button, TextMedium } from './Styled'
 import {reducer, initialState} from '../reducer/levelReducer'
+import {VocabularyContext} from '../context/vocabularyContext'
 
-const Levels = ({setLevels}) => {
+const Levels = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const {setLevels} = useContext(VocabularyContext)
+
   useEffect(() => {
     const selectedLevels = state.filter(({active}) => active).map(({title}) => title)
     setLevels(selectedLevels)
   },[state])
 
   return (
-    <LevelsContainer>
-      <Touchable onPress={() => setLevels([])} >
+    <LevelsContainer justifyContent="space-between">
+      <Button onPress={() => setLevels([])} activeOpacity={.7}>
         <TextMedium>all</TextMedium>
-      </Touchable>
+      </Button>
       {state.map((level, index) =>
-        <Touchable
+        <Button
           onPress={() => dispatch({target: level})}
           key={index}
+          activeOpacity={.7}
         >
           <TextMedium>{level.title}</TextMedium>
-        </Touchable>
+        </Button>
       )}
     </LevelsContainer>
   )
@@ -29,7 +33,6 @@ const Levels = ({setLevels}) => {
 
 const LevelsContainer = styled(FlexWrap)`
   padding: 10px 20px
-  justify-content: space-between
   border-bottom-width: 1px
   border-bottom-color: ${globalVariable.light_grey}
 `
