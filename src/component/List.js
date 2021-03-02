@@ -3,9 +3,9 @@ import { View, Text, FlatList, StyleSheet, Picker } from 'react-native'
 import {VocabularyContext} from '../context/vocabularyContext'
 import VocabularyItem from './VocabularyItem'
 import Levels from './Levels'
-import Dropdown from './Dropdown'
 import Pagination from './Pagination'
 import {Button, TextMedium, FlexWrap} from './Styled'
+import TopInterface from './list/TopInterface'
 
 
 const List = () => {
@@ -23,9 +23,7 @@ const List = () => {
 
   return (
     <View style={styles.container}>
-      <View>
-        {/* <Dropdown /> */}
-      </View>
+      <TopInterface />
       <Levels/>
       <FlatList
         data={OutputVocabularies}
