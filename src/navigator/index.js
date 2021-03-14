@@ -24,7 +24,7 @@ const StackNavigator = () => {
             headerTitle: 'Home',
             headerRight: () => (
               <TouchableWithoutFeedback onPress={() => navigate('Login')} >
-                <Text>{loading && !currentUser ? 'register' : 'login' }</Text>
+                <Text>{currentUser ? 'profile' : 'login' }</Text>
               </TouchableWithoutFeedback>
             )
           })} 

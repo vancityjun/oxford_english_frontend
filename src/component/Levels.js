@@ -23,6 +23,7 @@ const Levels = () => {
           onPress={() => dispatch({target: level})}
           key={index}
           activeOpacity={.7}
+          active={level.active}
         >
           <TextMedium>{level.title}</TextMedium>
         </Button>

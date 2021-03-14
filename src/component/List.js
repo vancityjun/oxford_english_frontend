@@ -27,8 +27,8 @@ const List = () => {
       <Levels/>
       <FlatList
         data={OutputVocabularies}
-        renderItem={VocabularyItem}
-        keyExtractor={(item) => item.cursor}
+        renderItem={({item}) => <VocabularyItem item={item} />}
+        keyExtractor={item => item.cursor}
       />
       <Pagination 
         pages={pages}
