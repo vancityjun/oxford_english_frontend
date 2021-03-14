@@ -1,0 +1,9 @@
+fragment DefinitionFields on Definition {
+  id
+  content
+  form
+  examples{
+    id
+    content
+  }
+}

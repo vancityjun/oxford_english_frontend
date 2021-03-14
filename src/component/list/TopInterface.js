@@ -2,6 +2,9 @@ import React, { useState, useContext, useEffect } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import {VocabularyContext} from '../../context/vocabularyContext'
+import {Row} from '../Styled'
+import styled from 'styled-components/native'
+
 
 const TopInterface = () => {
   const {
@@ -19,23 +22,33 @@ const TopInterface = () => {
   ]
 
   return (
-    <View>
+    <Row>
       <Text>Showing</Text>
-      {viewOptions.length ? 
-        <RNPickerSelect
-          onValueChange={(value) => value ? setPerPage(value) : null}
-          items={viewOptions}
-          value={perPage}
-        />
-      : null}
+      {viewOptions.length &&
+        <SelectWrap>
+          <RNPickerSelect
+            onValueChange={(value) => value ? setPerPage(parseInt(value)) : null}
+            items={viewOptions}
+            value={perPage}
+            placeholder={{}}
+          />
+        </SelectWrap>
+      }
       <Text>Order</Text>
-      <RNPickerSelect
-        onValueChange={(value) => value ? setOrder(value) : null}
-        items={orderOptions}
-        value='unset'
-      />
-    </View>
-  );
-};
+      <SelectWrap>
+        <RNPickerSelect
+          onValueChange={(value) => value ? setOrder(value) : null}
+          items={orderOptions}
+          value='unset'
+          placeholder={{}}
+        />
+      </SelectWrap>
+    </Row>
+  )
+}
+
+const SelectWrap = styled.View`
+  width: auto
+`
 
 export default TopInterface;

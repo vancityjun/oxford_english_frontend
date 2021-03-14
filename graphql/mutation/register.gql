@@ -1,0 +1,9 @@
+# import '../fragment/user.gql'
+
+mutation RegisterMutation($input: RegisterInput!) {
+  register (input: $input) {
+    user {
+      ...UserFields
+    }
+  }
+}

@@ -12,10 +12,11 @@ const VocabularyProvider = ({ children }) => {
     variables: { levels: levels }
   })
   const [perPage, setPerPage] = useState(20)
-  const [OutputVocabularies, setOutputVocabularies] = useState(null)
+  const [OutputVocabularies, setOutputVocabularies] = useState()
   const [currentPage, setCurrentPage] = useState(1)
   const [pages, setPages] = useState()
   const [viewOptions, setViewOptions] = useState([])
+  const [total, setTotal] = useState()
 
   useEffect(() => {
     if(!loading && data){
@@ -36,7 +37,9 @@ const VocabularyProvider = ({ children }) => {
 
   useEffect(() => {
     if(!loading && data){
-      const array =  [...Array(Math.ceil(data.vocabularies.length / 10))].map((item, index) => {
+      setTotal(data.vocabularies.length)
+      const totalCut = total <= 200 ? total : 200
+      const array =  [...Array(Math.ceil(totalCut / 10))].map((item, index) => {
         const number = (index + 1) * 10
         return {label: number.toString(), value: number}
       })
@@ -58,9 +61,11 @@ const VocabularyProvider = ({ children }) => {
         currentPage,
         perPage,
         viewOptions,
+        total,
         setLevels,
         setPerPage,
-        setOrder
+        setOrder,
+        setCurrentPage
       }}
     >
       {children}

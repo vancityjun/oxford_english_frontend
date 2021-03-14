@@ -1,0 +1,7 @@
+# import '../fragment/user.gql'
+
+query CurrentUser {
+  currentUser {
+    ...UserFields
+  }
+}

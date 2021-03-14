@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 
 export const globalVariable = {
-  primary_color: '#FFC915',
+  primary_color: '#881111',
   dark_grey: '#3E3E3E',
   medium_grey: '#676767',
   light_grey: '#DDDDDD',
@@ -27,7 +27,7 @@ export const FlexWrap = styled.View`
   justify-content: ${({justifyContent}) => justifyContent || 'flex-start'}
 ` 
 
-export const Item = styled(FlexWrap)`
+export const Row = styled(FlexWrap)`
   justify-content: space-between
   padding: 15px 20px
   border-bottom-width: 1px

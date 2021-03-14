@@ -1,9 +1,16 @@
-query Vocabularies($levels: [String]) {
+# import '../fragment/definitions.gql'
+
+query Vocabularies($levels: [String], $definitionFirst: Int) {
   vocabularies(levels: $levels) {
     id
     word
     level
     pos
     ox5000
+    notes {
+      definitions {
+        ...definitionField
+      }
+    }
   }
 }

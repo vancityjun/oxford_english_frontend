@@ -1,0 +1,12 @@
+# import '../fragment/definition.gql'
+
+query Definitions( $vocabularyId: Int!) {
+  definitions (vocabularyId: $vocabularyId) {
+    edges {
+      cursor
+      node {
+        ...DefinitionFields
+      }
+    }
+  }
+}

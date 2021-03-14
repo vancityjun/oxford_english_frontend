@@ -1,0 +1,8 @@
+# import '../fragment/definition.gql'
+
+query Note($userId: Int, $vocabularyId: Int) {
+  id
+  definitions{
+    ...definitionField
+  }
+}
