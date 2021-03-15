@@ -30,7 +30,7 @@ const List = () => {
         renderItem={({item}) => <VocabularyItem item={item} />}
         keyExtractor={item => item.cursor}
       />
-      <Pagination 
+      <Pagination
         pages={pages}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

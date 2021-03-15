@@ -11,6 +11,7 @@ const RegisterFields = ({state, dispatch}) => {
         <TextInput
           onChangeText={value => SetPasswordConfirm(value)}
           value={passwordConfirm}
+          secureTextEntry={true}
         />
       </View>
       <View>
