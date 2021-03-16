@@ -6,9 +6,7 @@ export const UserContext = createContext()
 
 const UserProvider = ({children}) => {
   const [currentUser, setCurrentUser] = useState(null)
-  const { loading, error, data } = useQuery(CurrentUser, context)
-  // temporary stupid solution because react native web not support any cookie neither AsyncStorage so far..
-  const [context, setContext] = useState({})
+  const { loading, error, data } = useQuery(CurrentUser)
 
   useEffect(() => {
     if(!loading && data){
@@ -17,11 +15,7 @@ const UserProvider = ({children}) => {
   },[loading, data])
 
   useEffect(()=> {
-    setContext({
-      context: {
-        headers: {'Authorization': currentUser?.token || ''}
-      } 
-    })
+    document.cookie = `token=${currentUser?.token || ''}`
   },[currentUser])
 
   return (
@@ -29,7 +23,6 @@ const UserProvider = ({children}) => {
       value={{
         loading,
         currentUser,
-        context,
         setCurrentUser
       }}
     >
