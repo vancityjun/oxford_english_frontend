@@ -5,7 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack'
 import {
   Main, 
   Login,
-  DefinitionView
 } from '../screen'
 import {UserContext} from '../context/userContext'
 
@@ -30,7 +29,6 @@ const StackNavigator = () => {
           })} 
         />
         <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Definitions" component={DefinitionView} />
       </Stack.Navigator>
     </NavigationContainer>
   )

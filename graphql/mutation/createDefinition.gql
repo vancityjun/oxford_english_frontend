@@ -1,0 +1,19 @@
+# import '../fragment/definition.gql'
+
+mutation createDefinition($input: CreateDefinitionInput!) {
+  createDefinition(input: $input) {
+    vocabulary {
+      id
+      word
+      level
+      pos
+      ox5000
+      note {
+        definitions{
+          ...DefinitionFields
+        }
+      }
+    }
+    errors
+  }
+}

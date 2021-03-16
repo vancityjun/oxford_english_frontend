@@ -1,25 +1,28 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components/native'
 import { Row, TextLarge, TextSmall, FlexWrap } from './Styled'
-import {TouchableOpacity} from 'react-native'
-import { useNavigation } from '@react-navigation/native'
+import {TouchableWithoutFeedback} from 'react-native'
+import DefinitionView from '../component/DefinitionView'
 
 const VocabularyItem = ({item}) => {
-  const {navigate} = useNavigation()
+  const [open, setOpen] = useState(false)
 
   return (
-    <TouchableOpacity onPress={() => navigate('Definitions', {vocabularyId: item.id})}>
+    <>
+    <TouchableWithoutFeedback onPress={() => setOpen(!open)}>
       <Row>
         <FlexWrap>
           <TextLarge margin_right={10}>{item.word}</TextLarge>
           <TextSmall light margin_right={10}>{item.pos}</TextSmall>
         </FlexWrap>
         <FlexWrap>
-          <TextSmall light margin_right={10}>an hour ago</TextSmall>
+          {item.note && <TextSmall light margin_right={10}>{item.note.updatedAt}</TextSmall>}
           <Level>{item.level}</Level>
         </FlexWrap>
       </Row>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
+    {open && <DefinitionView vocabularyId={parseInt(item.id)} pos={item.pos} />}
+    </>
   )
 }
 

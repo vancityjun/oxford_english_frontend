@@ -7,7 +7,8 @@ query Vocabularies($levels: [String], $definitionFirst: Int) {
     level
     pos
     ox5000
-    notes {
+    note {
+      updatedAt
       definitions {
         ...definitionField
       }

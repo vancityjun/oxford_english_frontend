@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
-const DefinitionItem = () => {
+const DefinitionItem = ({item}) => {
   return (
     <View>
-      <Text>DefinitionItem</Text>
+      <Text>{item.content}</Text>
     </View>
   );
 };
