@@ -1,16 +1,28 @@
 # import '../fragment/definition.gql'
 
-query Vocabularies($levels: [String]) {
-  vocabularies(levels: $levels) {
-    id
-    word
-    level
-    pos
-    ox5000
-    note {
-      updatedAt
-      definitions {
-        ...DefinitionFields
+query Vocabularies($first: Int, $levels: [String], $after: String, $before: String) {
+  vocabularies(first: $first, levels: $levels, after: $after, before: $before) {
+    totalCount
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    edges {
+      cursor
+      node{
+        id
+        word
+        level
+        pos
+        ox5000
+        note {
+          updatedAt
+          definitions {
+            ...DefinitionFields
+          }
+        }
       }
     }
   }

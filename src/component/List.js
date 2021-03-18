@@ -1,21 +1,26 @@
 import React, {useState, useContext, useEffect} from 'react'
-import { View, Text, FlatList, StyleSheet, Picker } from 'react-native'
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import {VocabularyContext} from '../context/vocabularyContext'
 import VocabularyItem from './VocabularyItem'
 import Levels from './Levels'
-import Pagination from './Pagination'
-import {Button, TextMedium, FlexWrap} from './Styled'
 import TopInterface from './list/TopInterface'
-
+import {FlexWrap} from './Styled'
 
 const List = () => {
   const {
-    OutputVocabularies,
+    vocabularies: {
+      edges,
+      pageInfo: {
+        hasPreviousPage,
+        hasNextPage,
+        startCursor,
+        endCursor
+      } = {}
+    } = {},
     loading,
     error,
-    pages,
-    currentPage,
-    setCurrentPage
+    setAfter,
+    setBefore
   } = useContext(VocabularyContext)
 
   if (loading) return <Text>loading</Text>
@@ -26,15 +31,22 @@ const List = () => {
       <TopInterface />
       <Levels/>
       <FlatList
-        data={OutputVocabularies}
-        renderItem={({item}) => <VocabularyItem item={item} />}
+        data={edges}
+        renderItem={({item}) => <VocabularyItem item={item.node} />}
         keyExtractor={item => item.cursor}
       />
-      <Pagination
-        pages={pages}
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-      />
+      <FlexWrap>
+        {hasPreviousPage &&
+          <TouchableOpacity onPress={() => setBefore(startCursor)}>
+            <Text>Prev</Text>
+          </TouchableOpacity>
+        }
+        {hasNextPage &&
+          <TouchableOpacity onPress={() => setAfter(endCursor)}>
+            <Text>Next</Text>
+          </TouchableOpacity>
+        }
+      </FlexWrap>
     </View>
   )
 }

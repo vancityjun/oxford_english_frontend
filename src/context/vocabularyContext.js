@@ -6,46 +6,28 @@ export const VocabularyContext = createContext()
 
 const VocabularyProvider = ({ children }) => {
   const [levels, setLevels] = useState([])
-  const [order, setOrder] = useState(null) // null, level, time
+  const [order, setOrder] = useState(null) // order by null, 'level', note 'updatedAt'
   const [forms, setForms] = useState([]) // filter by forms -verb, noun
-  const { loading, error, data } = useQuery(Vocabularies, {
-    variables: { levels: levels }
-  })
   const [perPage, setPerPage] = useState(20)
-  const [OutputVocabularies, setOutputVocabularies] = useState()
-  const [currentPage, setCurrentPage] = useState(1)
-  const [pages, setPages] = useState()
+  const [after, setAfter] = useState(null)
+  const [before, setBefore] = useState(null)
   const [viewOptions, setViewOptions] = useState([])
-  const [total, setTotal] = useState()
+
+  const { loading, error, data: {vocabularies} = {} } = useQuery(Vocabularies, {
+    variables: {first: perPage, levels: levels, after: after, before: before}
+  })
 
   useEffect(() => {
-    if(!loading && data){
-      const startIndex = (currentPage - 1) * perPage
-      const lastIndex = currentPage * perPage
-      const byPerPage = data.vocabularies.slice(startIndex, lastIndex)
-      setOutputVocabularies(byPerPage)
-    }
-  },[perPage, loading, data, currentPage])
-
-  useEffect(() => {
-    if(!loading && data){
-      const pages =  [...Array(Math.ceil(data.vocabularies.length / perPage))].map((item, index) => index)
-      setPages(pages)
-      setCurrentPage(1)
-    }
-  },[perPage, loading, data])
-
-  useEffect(() => {
-    if(!loading && data){
-      setTotal(data.vocabularies.length)
-      const totalCut = total <= 200 ? total : 200
-      const array =  [...Array(Math.ceil(totalCut / 10))].map((item, index) => {
+    if(!loading && vocabularies){
+      const {totalCount} = vocabularies
+      const totalCut = totalCount <= 200 ? totalCount : 200
+      const array = [...Array(Math.ceil(totalCut / 10))].map((item, index) => {
         const number = (index + 1) * 10
         return {label: number.toString(), value: number}
       })
       setViewOptions(array)
     }
-  },[loading, data])
+  },[loading, vocabularies])
 
   const random = (items) => {
     return items[Math.floor(Math.random() * items.length) ]
@@ -54,18 +36,17 @@ const VocabularyProvider = ({ children }) => {
   return (
     <VocabularyContext.Provider 
       value={{
-        OutputVocabularies,
+        vocabularies,
         loading,
         error,
-        pages,
-        currentPage,
         perPage,
         viewOptions,
-        total,
         setLevels,
         setPerPage,
         setOrder,
-        setCurrentPage
+        setForms,
+        setAfter,
+        setBefore
       }}
     >
       {children}
