@@ -3,6 +3,6 @@
 query Note($userId: Int, $vocabularyId: Int) {
   id
   definitions{
-    ...definitionField
+    ...DefinitionFields
   }
 }

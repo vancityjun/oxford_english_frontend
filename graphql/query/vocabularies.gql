@@ -1,6 +1,6 @@
-# import '../fragment/definitions.gql'
+# import '../fragment/definition.gql'
 
-query Vocabularies($levels: [String], $definitionFirst: Int) {
+query Vocabularies($levels: [String]) {
   vocabularies(levels: $levels) {
     id
     word
@@ -10,7 +10,7 @@ query Vocabularies($levels: [String], $definitionFirst: Int) {
     note {
       updatedAt
       definitions {
-        ...definitionField
+        ...DefinitionFields
       }
     }
   }

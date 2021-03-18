@@ -1,6 +1,8 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import CurrentUser from '../../graphql/query/currentUser.gql'
+import * as Device from 'expo-device'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const UserContext = createContext()
 
@@ -15,8 +17,18 @@ const UserProvider = ({children}) => {
   },[loading, data])
 
   useEffect(()=> {
-    document.cookie = `token=${currentUser?.token || ''}`
+    setCookie()
   },[currentUser])
+
+  const setCookie = async () => {
+    const device = await Device.getDeviceTypeAsync()
+    const value = `token=${currentUser?.token || ''}`
+    if (device === Device.DeviceType.DESKTOP) {
+      document.cookie = value
+    } else {
+      await AsyncStorage.setItem('@token', value)
+    }
+  }
 
   return (
     <UserContext.Provider
