@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client'
 import {CreateDefinition} from '../../graphql/mutation/createDefinition.gql'
 import {reducer} from '../reducer/exampleReducer'
 
-const AddDefinition = ({vocabularyId, form}) => {
+const AddDefinition = ({vocabularyId, form, setOpenField}) => {
   const [content, setContent] = useState('')
   const [formVariable, setFormVariable] = useState(form)
   const [createDefinition, { data }] = useMutation(CreateDefinition)
@@ -18,6 +18,7 @@ const AddDefinition = ({vocabularyId, form}) => {
       examples: examples
     }
     createDefinition({variables: {input: input}})
+    setOpenField(false)
   }
 
   return (
@@ -37,10 +38,10 @@ const AddDefinition = ({vocabularyId, form}) => {
       {examples?.map((example, index)=>
         <>
           <TextInput
-          onChangeText={value => dispatch({index: index, value: value})}
-          value={example}
-          multiline={true}
-          key={index}
+            onChangeText={value => dispatch({index: index, value: value})}
+            value={example}
+            multiline={true}
+            key={index}
           />
           <TouchableOpacity onPress={() => dispatch({type: 'remove', index: index})}>
             <Text>-</Text>
@@ -49,7 +50,7 @@ const AddDefinition = ({vocabularyId, form}) => {
       )}
 
       <TouchableOpacity onPress={() => submit()}>
-        <Text>send</Text>
+        <Text>Submit</Text>
       </TouchableOpacity>
     </View>
   );

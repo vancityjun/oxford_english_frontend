@@ -10,7 +10,6 @@ const TopInterface = () => {
   const {
     perPage,
     setPerPage,
-    OutputVocabularies,
     viewOptions,
     setOrder
   } = useContext(VocabularyContext)
@@ -18,7 +17,7 @@ const TopInterface = () => {
   const orderOptions = [
     {label: 'unset', value: 'unset'},
     {label: 'level', value: 'level'},
-    {label: 'time', value: 'time'},
+    {label: 'time', value: 'updated_at'},
   ]
 
   return (
