@@ -1,26 +1,7 @@
-import React, { useState, useReducer } from 'react'
+import React from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
-import { useMutation } from '@apollo/client'
-import {CreateDefinition} from '../../graphql/mutation/createDefinition.gql'
-import {reducer} from '../reducer/exampleReducer'
 
-const AddDefinition = ({vocabularyId, form, setOpenField}) => {
-  const [content, setContent] = useState('')
-  const [formVariable, setFormVariable] = useState(form)
-  const [createDefinition, { data }] = useMutation(CreateDefinition)
-  const [examples, dispatch] = useReducer(reducer, [])
-
-  const submit = () => {
-    const input = {
-      vocabularyId: vocabularyId,
-      content: content,
-      form: formVariable,
-      examples: examples
-    }
-    createDefinition({variables: {input: input}})
-    setOpenField(false)
-  }
-
+const AddDefinition = ({submit, examples, content, setContent, dispatch}) => {
   return (
     <View>
       <Text>definition</Text>
@@ -35,11 +16,12 @@ const AddDefinition = ({vocabularyId, form, setOpenField}) => {
           <Text>+</Text>
         </TouchableOpacity>
       </View>
-      {examples?.map((example, index)=>
+      {examples?.map((example, index) =>
+        !example._destroy &&
         <>
           <TextInput
             onChangeText={value => dispatch({index: index, value: value})}
-            value={example}
+            value={example.content}
             multiline={true}
             key={index}
           />

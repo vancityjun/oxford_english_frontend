@@ -2,6 +2,12 @@ fragment DefinitionFields on Definition {
   id
   content
   form
+  updatedAt
+  user{
+    id
+    lastName
+    firstName
+  }
   examples{
     id
     content

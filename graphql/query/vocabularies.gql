@@ -1,7 +1,17 @@
 # import '../fragment/definition.gql'
 
-query Vocabularies($first: Int, $levels: [String], $after: String, $before: String) {
-  vocabularies(first: $first, levels: $levels, after: $after, before: $before) {
+query Vocabularies(
+  $first: Int,
+  $levels: [String],
+  $after: String,
+  $before: String
+) {
+  vocabularies(
+    first: $first,
+    levels: $levels,
+    after: $after,
+    before: $before
+  ) {
     totalCount
     pageInfo {
       hasPreviousPage
