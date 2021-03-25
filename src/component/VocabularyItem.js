@@ -3,6 +3,7 @@ import styled from 'styled-components/native'
 import { Row, TextLarge, TextSmall, FlexWrap } from './Styled'
 import {TouchableWithoutFeedback} from 'react-native'
 import DefinitionView from '../component/DefinitionView'
+import moment from 'moment'
 
 const VocabularyItem = ({item}) => {
   const [open, setOpen] = useState(false)
@@ -16,7 +17,7 @@ const VocabularyItem = ({item}) => {
           <TextSmall light margin_right={10}>{item.pos}</TextSmall>
         </FlexWrap>
         <FlexWrap>
-          {item.note && <TextSmall light margin_right={10}>{item.note.updatedAt}</TextSmall>}
+          {item.note && <TextSmall light margin_right={10}>{moment(item.note.updatedAt).fromNow()}</TextSmall>}
           <Level>{item.level}</Level>
         </FlexWrap>
       </Row>

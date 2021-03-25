@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { StyleSheet } from 'react-native'
 
 export const globalVariable = {
   primary_color: '#881111',
@@ -20,12 +21,23 @@ const {
   font_large
 } = globalVariable
 
+export const Page = styled.View`
+  background: #fff
+  height: 100%
+`
+
 export const FlexWrap = styled.View`
   display: flex
   flex-flow: row-wrap
   align-items: baseline
   justify-content: ${({justifyContent}) => justifyContent || 'flex-start'}
-` 
+`
+
+export const FlexColumn = styled(Page)`
+  display: flex
+  flex-direction: column
+  align-items: center
+`
 
 export const Row = styled(FlexWrap)`
   justify-content: space-between
@@ -38,17 +50,33 @@ export const TextMedium = styled.Text`
   font-size: ${font_medium}
   color: ${({light}) => light ? medium_grey : dark_grey}
   margin-right: ${({margin_right}) => margin_right || 0}px
+  line-height: 26
 `
 export const TextLarge = styled(TextMedium)`
   font-size: ${font_large}
+  line-height: 30
 `
 export const TextSmall = styled(TextMedium)`
   font-size: ${font_small}
+  line-height: 22
 `
 
 export const Button = styled.TouchableOpacity`
-  border: 1px solid ${dark_grey}
+  border: ${({outline}) => outline ? `1px solid ${dark_grey}` : 'none'}
   padding: 2px 10px
   border-radius: 7px
   background: ${({active}) => active ? primary_color : 'transparent'}
 `
+
+export const Inner = styled.View`
+  width: 100%
+  margin-bottom: 20px
+`
+
+export const globalStyles = StyleSheet.create({
+  content: {
+    marginBottom: 10,
+    lineHeight: 22,
+    fontSize: 16
+  }
+})

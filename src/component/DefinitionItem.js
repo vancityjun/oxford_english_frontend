@@ -1,10 +1,11 @@
 import React, { useState, useReducer } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableWithoutFeedback } from 'react-native'
 import AddDefinition from './AddDefinition'
 import { useMutation } from '@apollo/client'
 import {UpdateDefinition} from '../../graphql/mutation/updateDefinition.gql'
 import {reducer} from '../reducer/exampleReducer'
-
+import {Inner, globalStyles} from './Styled'
+import Button from './Button'
 
 const DefinitionItem = ({item, currentUser}) => {
   const [editable, setEditable] = useState(false)
@@ -26,24 +27,24 @@ const DefinitionItem = ({item, currentUser}) => {
   }
 
   return (
-    <View>
-      {editable ?
-        <AddDefinition
-          submit={submit}
-          content={content}
-          setContent={setContent}
-          examples={examples}
-          dispatch={dispatch}
-        />
-      :
-        <Definition item={item} />
-      }
-      {item.user.id === currentUser?.id &&
-        <TouchableOpacity onPress={() => setEditable(!editable)}>
-          <Text>{editable ? 'Cancel' : 'Edit'}</Text>
-        </TouchableOpacity>
-      }
-    </View>
+    <TouchableWithoutFeedback onLongPress={() => console.log('long p')}>
+      <Inner>
+          {editable ?
+            <AddDefinition
+              submit={submit}
+              content={content}
+              setContent={setContent}
+              examples={examples}
+              dispatch={dispatch}
+            />
+          :
+            <Definition item={item} />
+          }
+          {item.user.id === currentUser?.id &&
+            <Button onPress={() => setEditable(!editable)} title={editable ? 'Cancel' : 'Edit'}/>
+          }
+      </Inner>
+    </TouchableWithoutFeedback>
   )
 }
 
@@ -51,9 +52,9 @@ const Definition = ({item}) => {
   return (
     <>
       <Text>{item.user.firstName} {item.user.lastName}</Text>
-      <Text>{item.content}</Text>
+      <Text style={globalStyles.content} >{item.content}</Text>
       {item.examples.map(({content}) =>
-        <Text>{content}</Text>
+        <Text style={globalStyles.content} >{content}</Text>
       )}
     </>
   )

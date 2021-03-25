@@ -6,7 +6,11 @@ export const initialState = [
   { title: 'c1', active: false }
 ]
 
-export const reducer = (state, {target}) => {
-  target.active = !target.active
-  return [...state]
+export const reducer = (state, {target, active}) => {
+  if(target){
+    target.active = !target.active
+    return [...state]
+  } else {
+    return state.map(({title}) => ({title: title, active: active }))
+  }
 }

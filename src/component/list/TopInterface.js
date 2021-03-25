@@ -23,7 +23,7 @@ const TopInterface = () => {
   return (
     <Row>
       <Text>Showing</Text>
-      {viewOptions.length &&
+      {viewOptions.length > 0 &&
         <SelectWrap>
           <RNPickerSelect
             onValueChange={(value) => value ? setPerPage(parseInt(value)) : null}

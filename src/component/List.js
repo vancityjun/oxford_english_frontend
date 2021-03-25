@@ -23,9 +23,6 @@ const List = () => {
     setBefore
   } = useContext(VocabularyContext)
 
-  if (loading) return <Text>loading</Text>
-  if (error) return  <Text>{error.message}</Text>
-
   return (
     <View style={styles.container}>
       <TopInterface />

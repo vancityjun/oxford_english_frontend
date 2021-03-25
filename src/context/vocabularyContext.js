@@ -7,7 +7,6 @@ export const VocabularyContext = createContext()
 const VocabularyProvider = ({ children }) => {
   const [levels, setLevels] = useState([])
   const [order, setOrder] = useState(null) // order by null, 'level', note 'updatedAt'
-  const [forms, setForms] = useState([]) // filter by forms -verb, noun
   const [perPage, setPerPage] = useState(20)
   const [after, setAfter] = useState(null)
   const [before, setBefore] = useState(null)
@@ -41,10 +40,10 @@ const VocabularyProvider = ({ children }) => {
         error,
         perPage,
         viewOptions,
+        levels,
         setLevels,
         setPerPage,
         setOrder,
-        setForms,
         setAfter,
         setBefore
       }}

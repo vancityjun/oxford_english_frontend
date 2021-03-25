@@ -1,5 +1,5 @@
 import React, { useReducer, useContext, useState } from 'react'
-import { View, Text, TouchableWithoutFeedback } from 'react-native'
+import { Text } from 'react-native'
 import { useQuery } from '@apollo/client'
 import Definitions from '../../graphql/query/definitions.gql'
 import DefinitionItem from './DefinitionItem'
@@ -8,6 +8,8 @@ import {UserContext} from '../context/userContext'
 import { useMutation } from '@apollo/client'
 import {CreateDefinition} from '../../graphql/mutation/createDefinition.gql'
 import {reducer} from '../reducer/exampleReducer'
+import {Row} from './Styled'
+import Button from './Button'
 
 const DefinitionView = ({vocabularyId, pos}) => {
   const [openField, setOpenField] = useState(false)
@@ -37,7 +39,7 @@ const DefinitionView = ({vocabularyId, pos}) => {
   if(error) return <Text>{error.message}</Text>
 
   return (
-    <View>
+    <Row>
       {data &&
         <DefinitionItem item={data.createDefinition.definition} currentUser={currentUser} />
       }
@@ -45,14 +47,18 @@ const DefinitionView = ({vocabularyId, pos}) => {
         <DefinitionItem item={node} key={cursor} currentUser={currentUser} />
       )}
       {currentUser &&
-        <TouchableWithoutFeedback onPress={()=> setOpenField(!openField)}>
-          <Text>Add Definitions</Text>
-        </TouchableWithoutFeedback>
+        <Button onPress={()=> setOpenField(!openField)} title={openField ? 'Cancel' : 'Add Definitions'} />
       }
-      {openField && 
-        <AddDefinition submit={submit} content={content} setContent={setContent} examples={examples} dispatch={dispatch} />
+      {openField &&
+        <AddDefinition 
+          submit={submit}
+          content={content}
+          setContent={setContent}
+          examples={examples}
+          dispatch={dispatch}
+        />
       }
-    </View>
+    </Row>
   )
 }
 
