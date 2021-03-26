@@ -1,5 +1,5 @@
-mutation Logout() {
-  logout {
+mutation LogoutMutation($input: LogoutInput) {
+  logout (input: $input) {
     message
   }
 }

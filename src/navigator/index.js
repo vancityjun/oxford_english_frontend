@@ -1,17 +1,19 @@
 import React, {useContext} from 'react'
-import { TouchableWithoutFeedback, Text } from 'react-native'
+import { Text } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import {
   Main, 
   Login,
+  Profile
 } from '../screen'
 import {UserContext} from '../context/userContext'
+import Button from '../component/Button'
 
 const Stack = createStackNavigator()
 
 const StackNavigator = () => {
-  const {loading, currentUser} = useContext(UserContext)
+  const {currentUser} = useContext(UserContext)
 
   return (
     <NavigationContainer>
@@ -21,14 +23,15 @@ const StackNavigator = () => {
           component={Main}
           options={ ({navigation: {navigate}}) => ({
             headerTitle: 'Home',
-            headerRight: () => (
-              <TouchableWithoutFeedback onPress={() => navigate('Login')} >
-                <Text>{currentUser ? 'profile' : 'login' }</Text>
-              </TouchableWithoutFeedback>
-            )
-          })} 
+            headerRight: () =>
+            currentUser ?
+              <Button onPress={() => navigate('Profile')} title='Profile'/> 
+            :
+              <Button onPress={() => navigate('Login')} title='Login'/> 
+          })}
         />
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   )

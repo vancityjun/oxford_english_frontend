@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components/native'
 import { Row, TextLarge, TextSmall, FlexWrap } from './Styled'
-import {TouchableWithoutFeedback} from 'react-native'
+import {TouchableHighlight} from 'react-native'
 import DefinitionView from '../component/DefinitionView'
 import moment from 'moment'
 
@@ -10,8 +10,7 @@ const VocabularyItem = ({item}) => {
 
   return (
     <>
-    <TouchableWithoutFeedback onPress={() => setOpen(!open)}>
-      <Row>
+      <Row as={TouchableHighlight} onPress={() => setOpen(!open)} underlayColor="#f5f5f5"><>
         <FlexWrap>
           <TextLarge margin_right={10}>{item.word}</TextLarge>
           <TextSmall light margin_right={10}>{item.pos}</TextSmall>
@@ -20,9 +19,8 @@ const VocabularyItem = ({item}) => {
           {item.note && <TextSmall light margin_right={10}>{moment(item.note.updatedAt).fromNow()}</TextSmall>}
           <Level>{item.level}</Level>
         </FlexWrap>
-      </Row>
-    </TouchableWithoutFeedback>
-    {open && <DefinitionView vocabularyId={parseInt(item.id)} pos={item.pos} />}
+      </></Row>
+      {open && <DefinitionView vocabularyId={+item.id} pos={item.pos} />}
     </>
   )
 }

@@ -1,0 +1,5 @@
+mutation deleteDefinition($input: DeleteDefinitionInput!) {
+  deleteDefinition(input: $input) {
+
+  }
+}

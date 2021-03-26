@@ -1,14 +1,16 @@
 import React, { useState, useReducer } from 'react'
-import { Text, TouchableWithoutFeedback } from 'react-native'
+import { Text } from 'react-native'
 import AddDefinition from './AddDefinition'
 import { useMutation } from '@apollo/client'
 import {UpdateDefinition} from '../../graphql/mutation/updateDefinition.gql'
 import {reducer} from '../reducer/exampleReducer'
 import {Inner, globalStyles} from './Styled'
 import Button from './Button'
+import TooltipMenu from './TooltipMenu'
 
 const DefinitionItem = ({item, currentUser}) => {
   const [editable, setEditable] = useState(false)
+  const [openMenu, setOpenMenu] = useState(false)
   const [content, setContent] = useState(item.content)
   const [formVariable, setFormVariable] = useState(item.form)
   const [updateDefinition] = useMutation(UpdateDefinition)
@@ -27,24 +29,33 @@ const DefinitionItem = ({item, currentUser}) => {
   }
 
   return (
-    <TouchableWithoutFeedback onLongPress={() => console.log('long p')}>
-      <Inner>
-          {editable ?
-            <AddDefinition
-              submit={submit}
-              content={content}
-              setContent={setContent}
-              examples={examples}
-              dispatch={dispatch}
-            />
-          :
-            <Definition item={item} />
-          }
-          {item.user.id === currentUser?.id &&
-            <Button onPress={() => setEditable(!editable)} title={editable ? 'Cancel' : 'Edit'}/>
-          }
-      </Inner>
-    </TouchableWithoutFeedback>
+    <Inner>
+        {editable ? [
+          <AddDefinition
+            submit={submit}
+            content={content}
+            setContent={setContent}
+            examples={examples}
+            dispatch={dispatch}
+          />,
+          <Button onPress={() => setEditable(false)} title='Cancel' />
+        ] : [
+        <Definition item={item} />,
+        (item.user.id === currentUser?.id &&
+           <Button onPress={() => setOpenMenu(!openMenu)} title='...'/>)
+        ]}
+        {openMenu && 
+          <TooltipMenu menu={[
+            {title: 'Edit', onPress: () => {
+              setEditable(true)
+              setOpenMenu(false)
+            }},
+            {title: 'Delete', onPress: () => {
+              setOpenMenu(false)
+            }},
+          ]} />
+        }
+    </Inner>
   )
 }
 
@@ -53,8 +64,8 @@ const Definition = ({item}) => {
     <>
       <Text>{item.user.firstName} {item.user.lastName}</Text>
       <Text style={globalStyles.content} >{item.content}</Text>
-      {item.examples.map(({content}) =>
-        <Text style={globalStyles.content} >{content}</Text>
+      {item.examples.map(({content, id}) =>
+        <Text style={globalStyles.content} key={id} >{content}</Text>
       )}
     </>
   )

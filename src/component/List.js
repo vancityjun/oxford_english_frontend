@@ -1,10 +1,11 @@
-import React, {useState, useContext, useEffect} from 'react'
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import React, {useContext} from 'react'
+import { View, Text, FlatList, StyleSheet } from 'react-native'
 import {VocabularyContext} from '../context/vocabularyContext'
 import VocabularyItem from './VocabularyItem'
 import Levels from './Levels'
 import TopInterface from './list/TopInterface'
 import {FlexWrap} from './Styled'
+import Button from './Button'
 
 const List = () => {
   const {
@@ -17,8 +18,6 @@ const List = () => {
         endCursor
       } = {}
     } = {},
-    loading,
-    error,
     setAfter,
     setBefore
   } = useContext(VocabularyContext)
@@ -34,14 +33,10 @@ const List = () => {
       />
       <FlexWrap>
         {hasPreviousPage &&
-          <TouchableOpacity onPress={() => setBefore(startCursor)}>
-            <Text>Prev</Text>
-          </TouchableOpacity>
+          <Button onPress={() => setBefore(startCursor)} title="<"/>
         }
         {hasNextPage &&
-          <TouchableOpacity onPress={() => setAfter(endCursor)}>
-            <Text>Next</Text>
-          </TouchableOpacity>
+          <Button onPress={() => setAfter(endCursor)} title=">"/>
         }
       </FlexWrap>
     </View>

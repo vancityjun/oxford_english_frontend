@@ -26,7 +26,7 @@ const TopInterface = () => {
       {viewOptions.length > 0 &&
         <SelectWrap>
           <RNPickerSelect
-            onValueChange={(value) => value ? setPerPage(parseInt(value)) : null}
+            onValueChange={(value) => value ? setPerPage(+value) : null}
             items={viewOptions}
             value={perPage}
             placeholder={{}}

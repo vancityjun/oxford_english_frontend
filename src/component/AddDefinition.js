@@ -1,6 +1,7 @@
 import React from 'react'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TextInput } from 'react-native'
 import {Inner, globalStyles} from './Styled'
+import Button from './Button'
 
 const AddDefinition = ({submit, examples, content, setContent, dispatch}) => {
   return (
@@ -9,14 +10,14 @@ const AddDefinition = ({submit, examples, content, setContent, dispatch}) => {
       <TextInput
         onChangeText={value => setContent(value)}
         value={content}
-        multiline={true}
+        multiline
+        numberOfLines={4}
+        maxLength={100}
         style={globalStyles.content}
       />
       <View>
         <Text>examples</Text>
-        <TouchableOpacity onPress={() => dispatch({type: 'add'})}>
-          <Text>+</Text>
-        </TouchableOpacity>
+        <Button onPress={() => dispatch({type: 'add'})} title='+' active/>
       </View>
       {examples?.map((example, index) =>
         !example._destroy &&
@@ -24,19 +25,16 @@ const AddDefinition = ({submit, examples, content, setContent, dispatch}) => {
           <TextInput
             onChangeText={value => dispatch({index: index, value: value})}
             value={example.content}
-            multiline={true}
+            multiline
+            numberOfLines={4}
+            maxLength={100}
             key={index}
             style={globalStyles.content}
           />
-          <TouchableOpacity onPress={() => dispatch({type: 'remove', index: index})}>
-            <Text>-</Text>
-          </TouchableOpacity>
+          <Button onPress={() => dispatch({type: 'remove', index: index})} title='-' active/>
         </>
       )}
-
-      <TouchableOpacity onPress={() => submit()}>
-        <Text>Submit</Text>
-      </TouchableOpacity>
+      <Button onPress={() => submit()} title='Submit'/>
     </Inner>
   )
 }
