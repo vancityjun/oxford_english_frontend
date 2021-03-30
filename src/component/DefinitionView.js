@@ -23,9 +23,11 @@ const DefinitionView = ({vocabularyId, pos}) => {
   const submit = () => {
     const input = {
       vocabularyId: vocabularyId,
-      content: content,
-      form: formVariable,
-      examples: examples
+      definitionAttributes:{
+        content: content,
+        form: formVariable,
+        examples: examples
+      }
     }
     createDefinition({variables: {input: input}})
     setOpenField(false)

@@ -3,10 +3,12 @@ fragment DefinitionFields on Definition {
   content
   form
   updatedAt
+  languageCode
   user{
     id
     lastName
     firstName
+    fullName
   }
   examples{
     id
