@@ -5,7 +5,7 @@ import LoginMutation from '../../graphql/mutation/login.gql'
 import RegisterMutation from '../../graphql/mutation/register.gql'
 import { UserContext } from '../context/userContext'
 import { useMutation } from '@apollo/client'
-import {reducer, initialState} from '../reducer/loginReducer'
+import {reducer, initialState} from '../reducer/formReducer'
 import RegisterFields from '../component/login/RegisterFields'
 import Button from '../component/Button'
 
@@ -55,7 +55,7 @@ const Login = ({navigation}) => {
         <TextSmall>Email</TextSmall>
         <TextInput
           onChangeText={value => dispatch({target: {email: value}})}
-          value={state.email}
+          value={state.email || ''}
           autoCompleteType='username'
         />
       </Inner>
@@ -63,7 +63,7 @@ const Login = ({navigation}) => {
         <TextSmall>Password</TextSmall>
         <TextInput
           onChangeText={value => dispatch({target: {password: value}})}
-          value={state.password}
+          value={state.password || ''}
           autoCompleteType='password'
           secureTextEntry={true}
         />
@@ -81,6 +81,8 @@ const Login = ({navigation}) => {
           active={true}
           large={true}
           title={isRegister ? 'Create Account' : 'Login'}
+          width={170}
+          height={38}
         />
         <Button 
           onPress={() => setIsRegister(!isRegister)}

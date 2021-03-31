@@ -1,68 +1,68 @@
-import React, { useState, useReducer } from 'react'
-import { Text } from 'react-native'
+import React, { useState, useReducer, useContext } from 'react'
 import AddDefinition from './AddDefinition'
 import { useMutation } from '@apollo/client'
 import {UpdateDefinition} from '../../graphql/mutation/updateDefinition.gql'
 import {DeleteDefinition} from '../../graphql/mutation/deleteDefinition.gql'
-import {reducer} from '../reducer/exampleReducer'
-import {Inner, globalStyles, FlexWrap  } from './Styled'
-import Button from './Button'
-import TooltipMenu from './TooltipMenu'
+import {exampleReducer} from '../reducer/exampleReducer'
+import {Inner, globalStyles, FlexWrap, TextSmall  } from './Styled'
+import TooltipButton from './TooltipButton'
+import {ModalControlContext} from '../context/ModalControlContext'
+import {reducer} from '../reducer/formReducer'
 
 const DefinitionItem = ({item, currentUser}) => {
   const [editable, setEditable] = useState(false)
-  const [openMenu, setOpenMenu] = useState(false)
-  const [content, setContent] = useState(item.content)
-  const [formVariable, setFormVariable] = useState(item.form)
   const [updateDefinition] = useMutation(UpdateDefinition)
   const [deleteDefinition] = useMutation(DeleteDefinition)
+  const [definitionAttributes, definitionAttributesDispatch] = useReducer(reducer, {
+    content: item.content,
+    form: item.form,
+    languageCode: item.languageCode
+  })
   const initialState = item.examples.map(({content, id}) => ({content: content, id: id}))
-  const [examples, dispatch] = useReducer(reducer, initialState)
+  const [examples, examplesDispatch] = useReducer(exampleReducer, initialState)
+  const {setAlertMessage, setAction} = useContext(ModalControlContext)
 
   const submit = () => {
     const input = {
       id: item.id,
-      definitionAttributes: {
-        content: content,
-        form: formVariable,
-        examples: examples
-      }
+      definitionAttributes: definitionAttributes,
+      examples: examples
     }
     updateDefinition({variables: {input: input}})
     setEditable(false)
   }
 
+  const action = () => {
+    deleteDefinition({variables: {input: {id: item.id}}})
+  }
+
   return (
     <Inner>
-        {editable ? [
+        {editable ?
           <AddDefinition
             submit={submit}
-            content={content}
-            setContent={setContent}
+            definitionAttributes={definitionAttributes}
             examples={examples}
-            dispatch={dispatch}
-          />,
-          <Button onPress={() => setEditable(false)} title='Cancel' />
-        ] : [
+            examplesDispatch={examplesDispatch}
+            definitionAttributesDispatch={definitionAttributesDispatch}
+            cancel={() => setEditable(false)}
+          />
+        : [
           <Definition item={item} />,
           (item.user.id === currentUser?.id &&
             <FlexWrap justifyContent="space-between">
-            <Button onPress={() => setOpenMenu(!openMenu)} title='...'/>
+              <TooltipButton menu={[
+                {title: 'Edit', onPress: () => {
+                  setEditable(true)
+                }},
+                {title: 'Delete', onPress: () => {
+                  setAlertMessage('Are you sure you want to delete?')
+                  setAction(() => action)
+                }},
+              ]} />
             </FlexWrap>
           )
         ]}
-        {openMenu && 
-          <TooltipMenu menu={[
-            {title: 'Edit', onPress: () => {
-              setEditable(true)
-              setOpenMenu(false)
-            }},
-            {title: 'Delete', onPress: () => {
-              setOpenMenu(false)
-              deleteDefinition({variables: {input: {id: item.id}}})
-            }},
-          ]} />
-        }
     </Inner>
   )
 }
@@ -70,10 +70,10 @@ const DefinitionItem = ({item, currentUser}) => {
 const Definition = ({item}) => {
   return (
     <>
-      <Text>{item.user.fullName}</Text>
-      <Text style={globalStyles.content} >{item.content}</Text>
+      <TextSmall>{item.user.fullName}</TextSmall>
+      <TextSmall style={globalStyles.content} >{item.content}</TextSmall>
       {item.examples.map(({content, id}) =>
-        <Text style={globalStyles.content} key={id} >{content}</Text>
+        <TextSmall style={globalStyles.content} key={id} >{content}</TextSmall>
       )}
     </>
   )

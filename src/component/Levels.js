@@ -20,6 +20,7 @@ const Levels = () => {
         onPress={() => dispatch({active: levels.length <= 4})}
         outline={true} title='all'
         active={levels.length > 4}
+        width={44}
       />
       {state.map((level, index) =>
         <Button
@@ -28,6 +29,7 @@ const Levels = () => {
           active={level.active}
           outline={true}
           title={level.title}
+          width={44}
         />
       )}
     </LevelsContainer>

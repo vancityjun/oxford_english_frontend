@@ -1,4 +1,4 @@
-export const reducer = (state, {index, value, type}) => {
+export const exampleReducer = (state, {index, value, type}) => {
   if (type === 'add' && (state.length < 1 || state[state.length - 1].content)) {
     return [...state, {content: ''}]
   } else if (type === 'remove') {

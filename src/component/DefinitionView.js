@@ -7,27 +7,27 @@ import AddDefinition from './AddDefinition'
 import {UserContext} from '../context/userContext'
 import { useMutation } from '@apollo/client'
 import {CreateDefinition} from '../../graphql/mutation/createDefinition.gql'
-import {reducer} from '../reducer/exampleReducer'
+import {exampleReducer} from '../reducer/exampleReducer'
+import {reducer} from '../reducer/formReducer'
 import {Row} from './Styled'
 import Button from './Button'
 
 const DefinitionView = ({vocabularyId, pos}) => {
   const [openField, setOpenField] = useState(false)
   const {currentUser} = useContext(UserContext)
-
-  const [content, setContent] = useState('')
-  const [formVariable, setFormVariable] = useState(pos)
   const [createDefinition, { data }] = useMutation(CreateDefinition)
-  const [examples, dispatch] = useReducer(reducer, [])
+  const [examples, examplesDispatch] = useReducer(exampleReducer, [])
+  const [definitionAttributes, definitionAttributesDispatch] = useReducer(reducer, {
+    content: '',
+    form: pos,
+    languageCode: 'en'
+  })
 
   const submit = () => {
     const input = {
       vocabularyId: vocabularyId,
-      definitionAttributes:{
-        content: content,
-        form: formVariable,
-        examples: examples
-      }
+      definitionAttributes: definitionAttributes,
+      examples: examples
     }
     createDefinition({variables: {input: input}})
     setOpenField(false)
@@ -48,17 +48,16 @@ const DefinitionView = ({vocabularyId, pos}) => {
       {definitions.edges.map(({node, cursor}) =>
         <DefinitionItem item={node} key={cursor} currentUser={currentUser} />
       )}
-      {currentUser &&
-        <Button onPress={()=> setOpenField(!openField)} title={openField ? 'Cancel' : 'Add Definitions'} />
-      }
-      {openField &&
+      {openField ?
         <AddDefinition 
           submit={submit}
-          content={content}
-          setContent={setContent}
+          definitionAttributes={definitionAttributes}
+          definitionAttributesDispatch={definitionAttributesDispatch}
+          examplesDispatch={examplesDispatch}
           examples={examples}
-          dispatch={dispatch}
-        />
+          cancel={()=> setOpenField(false)}
+        /> :
+        (currentUser && <Button onPress={()=> setOpenField(true)} title='Add Definitions' />)
       }
     </Row>
   )

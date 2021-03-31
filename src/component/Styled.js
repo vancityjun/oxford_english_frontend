@@ -6,6 +6,7 @@ export const globalVariable = {
   dark_grey: '#3E3E3E',
   medium_grey: '#676767',
   light_grey: '#DDDDDD',
+  white_grey: '#f5f5f5',
   font_small: '16px',
   font_medium: '18px',
   font_large: '20px'
@@ -16,6 +17,7 @@ const {
   dark_grey,
   medium_grey,
   light_grey,
+  white_grey,
   font_small,
   font_medium,
   font_large
@@ -50,15 +52,15 @@ export const TextMedium = styled.Text`
   font-size: ${font_medium}
   color: ${({light}) => light ? medium_grey : dark_grey}
   margin-right: ${({margin_right}) => margin_right || 0}px
-  line-height: 26
+  line-height: 26px
 `
 export const TextLarge = styled(TextMedium)`
   font-size: ${font_large}
-  line-height: 30
+  line-height: 30px
 `
 export const TextSmall = styled(TextMedium)`
   font-size: ${font_small}
-  line-height: 22
+  line-height: 22px
 `
 
 export const Button = styled.TouchableOpacity`
@@ -71,6 +73,15 @@ export const Button = styled.TouchableOpacity`
 export const Inner = styled.View`
   width: 100%
   margin-bottom: 20px
+`
+export const Modal = styled.View`
+  shadow-opacity: 0.24
+  shadow-radius: 7px
+  shadow-color: #757575
+  shadow-offset: 0px 2px
+  position: absolute
+  z-index: 1000
+  background: #fff
 `
 
 export const globalStyles = StyleSheet.create({
