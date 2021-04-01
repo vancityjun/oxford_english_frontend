@@ -5,12 +5,12 @@ import LoginMutation from '../../graphql/mutation/login.gql'
 import RegisterMutation from '../../graphql/mutation/register.gql'
 import { UserContext } from '../context/userContext'
 import { useMutation } from '@apollo/client'
-import {reducer, initialState} from '../reducer/formReducer'
+import {reducer} from '../reducer/formReducer'
 import RegisterFields from '../component/login/RegisterFields'
 import Button from '../component/Button'
 
 const Login = ({navigation}) => {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, {})
   const [isRegister, setIsRegister] = useState(false)
   const [disable, setDisable] = useState(true)
   const {currentUser, setCurrentUser} = useContext(UserContext)

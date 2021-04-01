@@ -4,10 +4,11 @@ import { useMutation } from '@apollo/client'
 import {UpdateDefinition} from '../../graphql/mutation/updateDefinition.gql'
 import {DeleteDefinition} from '../../graphql/mutation/deleteDefinition.gql'
 import {exampleReducer} from '../reducer/exampleReducer'
-import {Inner, globalStyles, FlexWrap, TextSmall  } from './Styled'
+import { Inner, globalStyles, FlexWrap, TextSmall } from './Styled'
 import TooltipButton from './TooltipButton'
 import {ModalControlContext} from '../context/ModalControlContext'
 import {reducer} from '../reducer/formReducer'
+import styled from 'styled-components/native'
 
 const DefinitionItem = ({item, currentUser}) => {
   const [editable, setEditable] = useState(false)
@@ -37,7 +38,7 @@ const DefinitionItem = ({item, currentUser}) => {
   }
 
   return (
-    <Inner>
+    <Wrap>
         {editable ?
           <AddDefinition
             submit={submit}
@@ -63,7 +64,7 @@ const DefinitionItem = ({item, currentUser}) => {
             </FlexWrap>
           )
         ]}
-    </Inner>
+    </Wrap>
   )
 }
 
@@ -78,5 +79,9 @@ const Definition = ({item}) => {
     </>
   )
 }
+
+const Wrap = styled(Inner)`
+  z-index: 1
+`
 
 export default DefinitionItem

@@ -17,7 +17,7 @@ const forms = [
   {label: 'adjective', value: 'adjective'},
   {label: 'adverb', value: 'adverb'},
   {label: 'preposition', value: 'preposition'},
-  {label: 'indefinite article', value: 'indefinite article'}
+  {label: 'article', value: 'article'}
 ]
 
 const AddDefinition = ({
@@ -33,57 +33,64 @@ const AddDefinition = ({
   cancel
 }) => {
   return (
-    <Inner>
-      <FlexWrap>
-        <TextSmall>Form:</TextSmall>
-        <RNPickerSelect
-          onValueChange={(value) => value ? definitionAttributesDispatch({target: {form: value}}) : null}
-          items={forms}
-          value={form}
-          placeholder={{}}
-        />
-        <TextSmall>language:</TextSmall>
-        <RNPickerSelect
-          onValueChange={(value) => value ? definitionAttributesDispatch({target: {languageCodes: value}}) : null}
-          items={languageCodes}
-          value={languageCode}
-          placeholder={{}}
-        />
-      </FlexWrap>
-      <TextSmall>Definition</TextSmall>
-      <TextInput
-        onChangeText={value => definitionAttributesDispatch({target: {content: value}})}
-        value={content}
-        multiline
-        numberOfLines={4}
-        maxLength={100}
-        style={globalStyles.content}
-      />
-      <Flex>
-        <TextSmall>Examples</TextSmall>
-        <Button onPress={() => examplesDispatch({type: 'add'})} title='+' />
-      </Flex>
-      {examples?.map((example, index) =>
-        !example._destroy &&
-        <Flex>
-          
-          <TextField
-            onChangeText={value => examplesDispatch({index: index, value: value})}
-            value={example.content}
-            multiline
-            numberOfLines={4}
-            maxLength={100}
-            key={index}
-            style={globalStyles.content}
+    <>
+      <Inner>
+        <FlexWrap>
+          <TextSmall>Form:</TextSmall>
+          <RNPickerSelect
+            onValueChange={(value) => value ? definitionAttributesDispatch({target: {form: value}}) : null}
+            items={forms}
+            value={form}
+            placeholder={{}}
           />
-          <Button onPress={() => examplesDispatch({type: 'remove', index: index})} title='-' />
+          <TextSmall>language:</TextSmall>
+          <RNPickerSelect
+            onValueChange={(value) => value ? definitionAttributesDispatch({target: {languageCodes: value}}) : null}
+            items={languageCodes}
+            value={languageCode}
+            placeholder={{}}
+          />
+        </FlexWrap>
+      </Inner>
+      <Inner>
+        <TextSmall>Definition</TextSmall>
+        <TextInput
+          onChangeText={value => definitionAttributesDispatch({target: {content: value}})}
+          value={content}
+          multiline
+          numberOfLines={4}
+          maxLength={100}
+          style={globalStyles.content}
+        />
+      </Inner>
+      <Inner>
+        <Flex>
+          <TextSmall>Examples</TextSmall>
+          <Button onPress={() => examplesDispatch({type: 'add'})} title='+' />
         </Flex>
-      )}
-      <Flex>
-        <Button onPress={()=> cancel()} title='Cancel' width={120} />
-        <Button onPress={() => submit()} title='Submit' active width={120} disabled={!content} />
-      </Flex>
-    </Inner>
+        {examples?.map((example, index) =>
+          !example._destroy &&
+          <Flex>
+            <TextField
+              onChangeText={value => examplesDispatch({index: index, value: value})}
+              value={example.content}
+              multiline
+              numberOfLines={4}
+              maxLength={100}
+              key={index}
+              style={globalStyles.content}
+            />
+            <Button onPress={() => examplesDispatch({type: 'remove', index: index})} title='-' />
+          </Flex>
+        )}
+      </Inner>
+      <Inner>
+        <Flex>
+          <Button onPress={()=> cancel()} title='Cancel' width={120} />
+          <Button onPress={() => submit()} title='Submit' active width={120} disabled={!content} />
+        </Flex>
+      </Inner>
+    </>
   )
 }
 
