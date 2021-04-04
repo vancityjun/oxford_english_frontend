@@ -21,6 +21,8 @@ const Levels = () => {
         outline={true} title='all'
         active={levels.length > 4}
         width={44}
+        background={false}
+        height='auto'
       />
       {state.map((level, index) =>
         <Button
@@ -30,6 +32,8 @@ const Levels = () => {
           outline={true}
           title={level.title}
           width={44}
+          background={false}
+          height='auto'
         />
       )}
     </LevelsContainer>

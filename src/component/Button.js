@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
-import {globalVariable} from './Styled'
+import { globalVariable, ButtonTitle } from './Styled'
 
 const Button = ({
   title,
@@ -12,6 +12,8 @@ const Button = ({
   large,
   width,
   height,
+  warn,
+  background = true,
   onBlur = () => {}
 }) => {
   if(!title){
@@ -28,8 +30,9 @@ const Button = ({
       width={width}
       height={height}
       onBlur={() => onBlur()}
+      background={background}
     >
-      <Title fontSize={fontSize} active={active} >{title}</Title>
+      <ButtonTitle fontSize={fontSize} active={active} warn={warn} >{title}</ButtonTitle>
     </Touchable>
   );
 }
@@ -37,19 +40,22 @@ const Button = ({
 const Touchable = styled.TouchableOpacity`
   border: ${({outline}) => outline ? `1px solid ${globalVariable.dark_grey}` : 'none'}
   border-radius: 7px
-  background: ${({active}) => active ? globalVariable.primary_color : globalVariable.white_grey}
+  background: ${({active, background}) => {
+    if(active){
+      return globalVariable.primary_color
+    }
+    if (!background) {
+      return 'transparent'
+    }
+    return globalVariable.white_grey
+  }}
   text-align: center
   display: flex
   align-items: center
   justify-content: center
-  min-width: ${({width}) => width || 30}px
-  min-height: ${({width}) => width? 36 :  30}px
+  min-width: ${({width}) => width || '30px'}
+  min-height: ${({width, height}) => width ? height || '36px' : '30px'}
   padding: 5px 10px
-`
-
-const Title = styled.Text`
-  color: ${({active}) => active ? '#fff' : globalVariable.dark_grey}
-  font-size: ${({fontSize = 16}) => fontSize}px
 `
 
 export default Button

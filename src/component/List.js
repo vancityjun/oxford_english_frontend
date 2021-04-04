@@ -1,10 +1,10 @@
 import React, {useContext} from 'react'
-import { View, Text, FlatList, StyleSheet } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import {VocabularyContext} from '../context/vocabularyContext'
 import VocabularyItem from './VocabularyItem'
 import Levels from './Levels'
 import TopInterface from './list/TopInterface'
-import {FlexWrap} from './Styled'
+import {FlexWrap, TextSmall} from './Styled'
 import Button from './Button'
 
 const List = () => {
@@ -13,13 +13,12 @@ const List = () => {
       edges,
       pageInfo: {
         hasPreviousPage,
-        hasNextPage,
-        startCursor,
-        endCursor
+        hasNextPage
       } = {}
     } = {},
-    setAfter,
-    setBefore
+    previous,
+    next,
+    page
   } = useContext(VocabularyContext)
 
   return (
@@ -31,13 +30,10 @@ const List = () => {
         renderItem={({item}) => <VocabularyItem item={item.node} />}
         keyExtractor={item => item.cursor}
       />
-      <FlexWrap>
-        {hasPreviousPage &&
-          <Button onPress={() => setBefore(startCursor)} title="<"/>
-        }
-        {hasNextPage &&
-          <Button onPress={() => setAfter(endCursor)} title=">"/>
-        }
+      <FlexWrap justifyContent='space-evenly'>
+        <Button onPress={() => previous()} title="<" disabled={!hasPreviousPage} />
+        <TextSmall>{page}</TextSmall>
+        <Button onPress={() => next()} title=">" disabled={!hasNextPage}/>
       </FlexWrap>
     </View>
   )

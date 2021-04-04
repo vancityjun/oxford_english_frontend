@@ -8,12 +8,19 @@ const VocabularyProvider = ({ children }) => {
   const [levels, setLevels] = useState([])
   const [order, setOrder] = useState(null) // order by null, 'level', note 'updatedAt'
   const [perPage, setPerPage] = useState(20)
-  const [after, setAfter] = useState(null)
   const [before, setBefore] = useState(null)
+  const [after, setAfter] = useState(null)
   const [viewOptions, setViewOptions] = useState([])
+  const [page, setPage] = useState(1)
 
   const { loading, error, data: {vocabularies} = {} } = useQuery(Vocabularies, {
-    variables: {first: perPage, levels: levels, after: after, before: before}
+    variables: {
+      first: perPage,
+      last: perPage,
+      levels: levels,
+      after: after,
+      before: before
+    }
   })
 
   useEffect(() => {
@@ -32,6 +39,18 @@ const VocabularyProvider = ({ children }) => {
     return items[Math.floor(Math.random() * items.length) ]
   }
 
+  const previous = () => {
+    setPage(page - 1)
+    setBefore(vocabularies.pageInfo.startCursor)
+    setAfter(null)
+  }
+
+  const next = () => {
+    setPage(page + 1)
+    setAfter(vocabularies.pageInfo.endCursor)
+    setBefore(null)
+  }
+
   return (
     <VocabularyContext.Provider 
       value={{
@@ -41,11 +60,12 @@ const VocabularyProvider = ({ children }) => {
         perPage,
         viewOptions,
         levels,
+        page,
         setLevels,
         setPerPage,
         setOrder,
-        setAfter,
-        setBefore
+        previous,
+        next
       }}
     >
       {children}

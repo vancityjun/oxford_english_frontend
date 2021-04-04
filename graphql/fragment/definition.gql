@@ -6,8 +6,6 @@ fragment DefinitionFields on Definition {
   languageCode
   user{
     id
-    lastName
-    firstName
     fullName
   }
   examples{

@@ -33,7 +33,7 @@ const DefinitionItem = ({item, currentUser}) => {
     setEditable(false)
   }
 
-  const action = () => {
+  const confirm_delete = () => {
     deleteDefinition({variables: {input: {id: item.id}}})
   }
 
@@ -56,10 +56,14 @@ const DefinitionItem = ({item, currentUser}) => {
                 {title: 'Edit', onPress: () => {
                   setEditable(true)
                 }},
-                {title: 'Delete', onPress: () => {
-                  setAlertMessage('Are you sure you want to delete?')
-                  setAction(() => action)
-                }},
+                {
+                  title: 'Delete',
+                  onPress: () => {
+                    setAlertMessage('Are you sure you want to delete?')
+                    setAction(() => confirm_delete)
+                  },
+                  warn: true
+                },
               ]} />
             </FlexWrap>
           )

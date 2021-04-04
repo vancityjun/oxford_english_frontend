@@ -7,6 +7,7 @@ export const globalVariable = {
   medium_grey: '#676767',
   light_grey: '#DDDDDD',
   white_grey: '#f5f5f5',
+  warn_red: '#e81717',
   font_small: '16px',
   font_medium: '18px',
   font_large: '20px'
@@ -17,7 +18,7 @@ const {
   dark_grey,
   medium_grey,
   light_grey,
-  white_grey,
+  warn_red,
   font_small,
   font_medium,
   font_large
@@ -61,6 +62,19 @@ export const TextLarge = styled(TextMedium)`
 export const TextSmall = styled(TextMedium)`
   font-size: ${font_small}
   line-height: 22px
+`
+
+export const ButtonTitle = styled(TextSmall)`
+  color: ${({active, warn}) => {
+    if(active) {
+      return '#fff'
+    }
+    if(warn) {
+      return warn_red
+    }
+    return dark_grey
+  }}
+  font-size: ${({fontSize = 16}) => fontSize}px
 `
 
 export const Button = styled.TouchableOpacity`

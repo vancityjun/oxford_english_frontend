@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "cleanup": "expo r -c"
+    "cleanup": "expo r -c",
+    "eslint": "eslint --fix src"
   },
   "dependencies": {
     "@apollo/client": "^3.3.11",
@@ -32,7 +33,9 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
-    "babel-plugin-import-graphql": "^2.8.1"
+    "babel-plugin-import-graphql": "^2.8.1",
+    "eslint": "^7.23.0",
+    "eslint-plugin-react": "^7.23.1"
   },
   "private": true
 }

@@ -1,4 +1,4 @@
-mutation deleteDefinition($input: DeleteDefinitionInput!) {
+mutation DeleteDefinition($input: DeleteDefinitionInput!) {
   deleteDefinition(input: $input) {
     message
   }

@@ -3,7 +3,6 @@ import { View } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import {VocabularyContext} from '../../context/vocabularyContext'
 import {Row, TextSmall} from '../Styled'
-import styled from 'styled-components/native'
 
 
 const TopInterface = () => {

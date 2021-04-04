@@ -4,7 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import {
   Main, 
   Login,
-  Profile
+  Profile,
+  EditProfile,
 } from '../screen'
 import {UserContext} from '../context/userContext'
 import {ModalControlContext} from '../context/ModalControlContext'
@@ -37,20 +38,21 @@ const StackNavigator = () => {
             headerTitle: 'Home',
             headerRight: () =>
             currentUser ?
-              <Button onPress={() => navigate('Profile')} title='Profile'/> 
+              <Button onPress={() => navigate('Profile')} title='Profile'/>
             :
-              <Button onPress={() => navigate('Login')} title='Login'/> 
+              <Button onPress={() => navigate('Login')} title='Login'/>
           })}
         />
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
 
 const ModalBackground = styled.Pressable`
-  position: absolute
+  position: fixed
   left: 0px
   top: 0px
   width: 100%

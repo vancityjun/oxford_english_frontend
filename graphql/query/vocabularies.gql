@@ -2,12 +2,14 @@
 
 query Vocabularies(
   $first: Int,
+  $last: Int,
   $levels: [String],
   $after: String,
   $before: String
 ) {
   vocabularies(
     first: $first,
+    last: $last,
     levels: $levels,
     after: $after,
     before: $before

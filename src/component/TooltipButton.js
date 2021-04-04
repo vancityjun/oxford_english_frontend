@@ -11,7 +11,7 @@ const TooltipButton = ({menu, buttonTitle = '...'}) => {
       <Button
         onPress={() => setOpenMenu(!openMenu)}
         title={buttonTitle}
-        onBlur={() => setOpenMenu(false)}
+        // onBlur={() => setOpenMenu(false)}
       />
       {openMenu &&
         <TooltipMenu menu={menu} />

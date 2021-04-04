@@ -1,6 +1,6 @@
 # import '../fragment/definition.gql'
 
-mutation createDefinition($input: CreateDefinitionInput!) {
+mutation CreateDefinition($input: CreateDefinitionInput!) {
   createDefinition(input: $input) {
     definition{
       ...DefinitionFields

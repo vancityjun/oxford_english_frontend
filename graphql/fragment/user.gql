@@ -1,8 +1,10 @@
 fragment UserFields on User {
   id
   token
-  email
-  lastName
-  firstName
   fullName
+  userAttributes {
+    email
+    lastName
+    firstName
+  }
 }
