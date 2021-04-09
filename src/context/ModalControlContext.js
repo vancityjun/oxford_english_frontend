@@ -10,8 +10,6 @@ const ModalControlProvider = ({children}) => {
   return (
     <ModalControlContext.Provider
       value={{
-        openModal,
-        setOpenModal,
         alertMessage,
         setAlertMessage,
         action,
