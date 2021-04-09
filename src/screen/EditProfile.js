@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from 'react'
+import React, { useContext, useReducer, useState, useEffect } from 'react'
 import { Page, Inner, FlexWrap } from '../component/Styled'
 import { UserContext } from '../context/userContext'
 import {reducer} from '../reducer/formReducer'
@@ -8,49 +8,59 @@ import DeleteUser from '../../graphql/mutation/deleteUser.gql'
 import { useMutation } from '@apollo/client'
 import Button from '../component/Button'
 import {ModalControlContext} from '../context/ModalControlContext'
+import styled from 'styled-components/native'
 
 const EditProfile = () => {
   const {currentUser, setCurrentUser} = useContext(UserContext)
-  const [state, dispatch] = useReducer(reducer, currentUser.userAttributes)
+  const [state, dispatch] = useReducer(reducer, currentUser.userAttributes || {})
   const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [deleteUser, {data: message}] = useMutation(DeleteUser)
-  const [updateUser, {data: {updateUserData} = {}}] = useMutation(UpdateUser)
-  const {setAlertMessage, setAction} = useContext(ModalControlContext)
+  const [updateUser, {loading, data: {updateUserData} = {}}] = useMutation(UpdateUser)
+  const {setAlertMessage, setAction, setInput, setOnChange} = useContext(ModalControlContext)
 
+  useEffect(() => {
+    if(!loading && updateUserData) {
+      setCurrentUser(updateUserData.user)
+    }
+  },[updateUserData, loading])
 
   const confirm_delete = () => {
     deleteUser({variables: {input :{password: password}}})
     setCurrentUser(null)
   }
   const update = () => {
+    delete state.__typename
     updateUser({
       variables: {input: {userAttributes: state}},
       password: password
     })
-    setCurrentUser(updateUserData.user)
   }
 
   return (
-    <Page>
+    <Wrap>
       <TextInputWithTitle
         title="Email"
         onChangeText={value => dispatch({target: {email: value}})}
         value={state.email}
         maxLength={30}
       />
-      <TextInputWithTitle
-        title="First name"
-        onChangeText={value => dispatch({target: {firstName: value}})}
-        value={state.firstName}
-        maxLength={20}
-      />
-      <TextInputWithTitle
-        title="Last name"
-        onChangeText={value => dispatch({target: {lastName: value}})}
-        value={state.lastName}
-        maxLength={20}
-      />
+      <FlexWrap justifyContent='space-between'>
+        <TextInputWithTitle
+          title="First name"
+          onChangeText={value => dispatch({target: {firstName: value}})}
+          value={state.firstName}
+          maxLength={20}
+          width='50%'
+        />
+        <TextInputWithTitle
+          title="Last name"
+          onChangeText={value => dispatch({target: {lastName: value}})}
+          value={state.lastName}
+          maxLength={20}
+          width='50%'
+        />
+      </FlexWrap>
       <TextInputWithTitle
         title="Change password"
         onChangeText={value => dispatch({target: {password: value}})}
@@ -65,30 +75,35 @@ const EditProfile = () => {
         maxLength={20}
         secureTextEntry={true}
       />
-      <TextInputWithTitle
-        title="Current password"
-        onChangeText={value => setPassword(value)}
-        value={password}
-        maxLength={20}
-        secureTextEntry={true}
-      />
       <Inner>
-        <FlexWrap>
+        <FlexWrap justifyContent='space-evenly'>
           <Button
             onPress={()=> {
               setAlertMessage('Are you sure you want to delete your account?')
               setAction(() => confirm_delete)
-            }} 
-            title='Delete account' 
-            width={120} 
-            background={false} 
-            warn 
+              setInput({
+                title: 'Confirm Password',
+                value: password,
+                onChange (value) {
+                  setPassword(value)
+                  debugger
+                }
+              })
+            }}
+            title='Delete account'
+            width={120}
+            background={false}
+            warn
           />
           <Button onPress={() => update()} title='Submit' active width={120} />
         </FlexWrap>
       </Inner>
-    </Page>
+    </Wrap>
   )
 }
+
+const Wrap = styled(Page)`
+  padding: 20px
+`
 
 export default EditProfile

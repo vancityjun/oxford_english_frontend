@@ -17,17 +17,13 @@ const Stack = createStackNavigator()
 
 const StackNavigator = () => {
   const {currentUser} = useContext(UserContext)
-  const {alertMessage, setAlertMessage, setOpenModal, action} = useContext(ModalControlContext)
+  const {alertMessage, setOpenModal} = useContext(ModalControlContext)
 
   return (
     <NavigationContainer>
       {!!alertMessage &&
         <ModalBackground onPressIn={() => setOpenModal(false)} >
-          <Alert
-            alertMessage={alertMessage}
-            setAlertMessage={setAlertMessage}
-            action={action}
-          />
+          <Alert alertMessage={alertMessage} />
         </ModalBackground>
       }
       <Stack.Navigator>

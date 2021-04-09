@@ -1,9 +1,9 @@
 import React from 'react'
-import { TextInput } from 'react-native'
-import { Inner, globalStyles, TextSmall, FlexWrap } from './Styled'
+import { Inner, globalStyles, TextSmall, FlexWrap, TextInput } from './Styled'
 import Button from './Button'
 import styled from 'styled-components/native'
 import RNPickerSelect from 'react-native-picker-select'
+import TextInputWithTitle from './TextInputWithTitle'
 
 const languageCodes = [
   {label: 'English', value: 'en'},
@@ -53,14 +53,15 @@ const AddDefinition = ({
         </FlexWrap>
       </Inner>
       <Inner>
-        <TextSmall>Definition</TextSmall>
-        <TextInput
+        <TextInputWithTitle
           onChangeText={value => definitionAttributesDispatch({target: {content: value}})}
           value={content}
           multiline
           numberOfLines={4}
           maxLength={100}
           style={globalStyles.content}
+          title='Definition'
+          autoFocus
         />
       </Inner>
       <Inner>
@@ -71,7 +72,7 @@ const AddDefinition = ({
         {examples?.map((example, index) =>
           !example._destroy &&
           <Flex>
-            <TextField
+            <TextInputWithTitle
               onChangeText={value => examplesDispatch({index: index, value: value})}
               value={example.content}
               multiline
@@ -103,7 +104,7 @@ const Flex = styled.View`
   position: relative
 `
 
-const TextField = styled.TextInput`
+const TextField = styled(TextInput)`
   width: 100%
   margin-right: 10px
 `

@@ -55,13 +55,14 @@ const Login = ({navigation}) => {
       <TextInputWithTitle
         title='Email'
         onChangeText={value => dispatch({target: {email: value}})}
-        value={state.email || ''}
+        value={state.email}
         autoCompleteType='username'
+        autoFocus
       />
       <TextInputWithTitle
         title='Password'
         onChangeText={value => dispatch({target: {password: value}})}
-        value={state.password || ''}
+        value={state.password}
         autoCompleteType='password'
         secureTextEntry={true}
       />

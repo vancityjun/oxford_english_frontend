@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import * as Device from 'expo-device'
+import isDesktop from '../src/helper/DeviceHelper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const httpLink = createHttpLink({
@@ -9,9 +9,8 @@ const httpLink = createHttpLink({
 })
 
 const getToken = async () => {
-  const device = await Device.getDeviceTypeAsync()
   let token
-  if (device === Device.DeviceType.DESKTOP) {
+  if (await isDesktop()) {
     token = document.cookie.split('; ').find(row => row.startsWith('token='))
   } else {
     token = await AsyncStorage.getItem('@token')
@@ -32,8 +31,6 @@ const authLink = setContext( async (_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache({
-    // addTypename: false
-  })
+  cache: new InMemoryCache()
 })
 export default client

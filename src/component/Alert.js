@@ -1,12 +1,24 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import styled from 'styled-components/native'
 import { Modal, FlexWrap, TextSmall } from '../component/Styled'
 import Button from '../component/Button'
+import TextInputWithTitle from '../component/TextInputWithTitle'
+import {ModalControlContext} from '../context/ModalControlContext'
 
-const Alert = ({alertMessage, setAlertMessage, action}) => {
+const Alert = ({alertMessage}) => {
+  const {setAlertMessage, action, input, onChange} = useContext(ModalControlContext)
+
   return (
     <Wrap>
       <TextSmall>{alertMessage}</TextSmall>
+      {input &&
+        <TextInputWithTitle
+          title={input.title}
+          onChangeText={(value) => input.onChange(value)}
+          value={input.value}
+          autoFocus
+        />
+      }
       <FlexWrap>
         <Button 
           title='Cancel' 

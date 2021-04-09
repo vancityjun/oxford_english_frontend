@@ -64,6 +64,10 @@ export const TextSmall = styled(TextMedium)`
   line-height: 22px
 `
 
+export const TextInputTitle = styled(TextSmall)`
+  color: ${({focus}) => focus ? primary_color : medium_grey}
+`
+
 export const ButtonTitle = styled(TextSmall)`
   color: ${({active, warn}) => {
     if(active) {
@@ -85,7 +89,7 @@ export const Button = styled.TouchableOpacity`
 `
 
 export const Inner = styled.View`
-  width: 100%
+  width: ${({width}) => width || '100%'}
   margin-bottom: 20px
 `
 export const Modal = styled.View`
@@ -98,10 +102,16 @@ export const Modal = styled.View`
   background: #fff
 `
 
+export const TextInput = styled.TextInput`
+  border-bottom-width: 1px
+  border-bottom-color: ${({focus}) => focus ? primary_color : dark_grey}
+  font-size: 16px
+  background: #fff
+`
+
 export const globalStyles = StyleSheet.create({
   content: {
     marginBottom: 10,
-    lineHeight: 22,
-    fontSize: 16
+    lineHeight: 22
   }
 })

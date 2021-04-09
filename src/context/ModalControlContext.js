@@ -6,6 +6,8 @@ const ModalControlProvider = ({children}) => {
   const [openModal, setOpenModal] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [action, setAction] = useState()
+  const [onChange, setOnChange] = useState()
+  const [input, setInput] = useState({})
 
   return (
     <ModalControlContext.Provider
@@ -15,7 +17,11 @@ const ModalControlProvider = ({children}) => {
         alertMessage,
         setAlertMessage,
         action,
-        setAction
+        setAction,
+        input,
+        setInput,
+        onChange,
+        setOnChange
       }}
     >
       {children}
