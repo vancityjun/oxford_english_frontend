@@ -92,7 +92,7 @@ export const Inner = styled.View`
   width: ${({width}) => width || '100%'}
   margin-bottom: 20px
 `
-export const Modal = styled.View`
+export const ModalStyle = styled.View`
   shadow-opacity: 0.24
   shadow-radius: 7px
   shadow-color: #757575
@@ -107,6 +107,7 @@ export const TextInput = styled.TextInput`
   border-bottom-color: ${({focus}) => focus ? primary_color : dark_grey}
   font-size: 16px
   background: #fff
+  ${({isDesktop}) => isDesktop && 'outline-width: 0'}
 `
 
 export const globalStyles = StyleSheet.create({

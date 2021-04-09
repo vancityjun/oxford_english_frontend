@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableHighlight } from 'react-native'
 import styled from 'styled-components/native'
-import { Row, Modal, ButtonTitle } from './Styled'
+import { Row, ModalStyle, ButtonTitle } from './Styled'
 
 const TooltipMenu = ({menu}) => {
   return (
@@ -19,8 +19,8 @@ const TooltipMenu = ({menu}) => {
   )
 }
 
-const Wrap = styled(Modal)`
-  max-width: 140px
+const Wrap = styled(ModalStyle)`
+  width: 140px
   left: 30px
 `
 

@@ -6,9 +6,9 @@ import {DeleteDefinition} from '../../graphql/mutation/deleteDefinition.gql'
 import {exampleReducer} from '../reducer/exampleReducer'
 import { Inner, globalStyles, FlexWrap, TextSmall } from './Styled'
 import TooltipButton from './TooltipButton'
-import {ModalControlContext} from '../context/ModalControlContext'
-import {reducer} from '../reducer/formReducer'
+import reducer from '../reducer/formReducer'
 import styled from 'styled-components/native'
+import {ModalControlContext} from '../context/ModalControlContext'
 
 const DefinitionItem = ({item, currentUser}) => {
   const [editable, setEditable] = useState(false)

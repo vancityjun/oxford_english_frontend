@@ -17,18 +17,18 @@ const Stack = createStackNavigator()
 
 const StackNavigator = () => {
   const {currentUser} = useContext(UserContext)
-  const {alertMessage, setOpenModal} = useContext(ModalControlContext)
+  const {alertMessage, inputTitle, setOpenModal} = useContext(ModalControlContext)
 
   return (
     <NavigationContainer>
       {!!alertMessage &&
-        <ModalBackground onPressIn={() => setOpenModal(false)} >
-          <Alert alertMessage={alertMessage} />
+        <ModalBackground >
+          <Alert alertMessage={alertMessage} inputTitle={inputTitle} />
         </ModalBackground>
       }
       <Stack.Navigator>
-        <Stack.Screen 
-          name="Main" 
+        <Stack.Screen
+          name="Main"
           component={Main}
           options={ ({navigation: {navigate}}) => ({
             headerTitle: 'Home',
@@ -48,7 +48,7 @@ const StackNavigator = () => {
 }
 
 const ModalBackground = styled.Pressable`
-  position: fixed
+  position: absolute
   left: 0px
   top: 0px
   width: 100%

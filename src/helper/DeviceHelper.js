@@ -1,8 +1,11 @@
 import * as Device from 'expo-device'
 
-const isDesktop = async () => {
+export let deviceType, isDesktop
+
+const initialize = async () => {
   const device = await Device.getDeviceTypeAsync()
-  return device === Device.DeviceType.DESKTOP
+  deviceType = Device.DeviceType[device]
+  isDesktop = deviceType === 'DESKTOP'
 }
 
-export default isDesktop
+export default initialize

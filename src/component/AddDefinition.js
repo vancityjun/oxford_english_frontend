@@ -1,5 +1,5 @@
 import React from 'react'
-import { Inner, globalStyles, TextSmall, FlexWrap, TextInput } from './Styled'
+import { Inner, globalStyles, TextSmall, FlexWrap } from './Styled'
 import Button from './Button'
 import styled from 'styled-components/native'
 import RNPickerSelect from 'react-native-picker-select'
@@ -102,11 +102,6 @@ const Flex = styled.View`
   align-items: center
   width: 100%
   position: relative
-`
-
-const TextField = styled(TextInput)`
-  width: 100%
-  margin-right: 10px
 `
 
 export default AddDefinition

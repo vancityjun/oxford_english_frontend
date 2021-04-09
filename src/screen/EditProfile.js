@@ -1,23 +1,23 @@
 import React, { useContext, useReducer, useState, useEffect } from 'react'
 import { Page, Inner, FlexWrap } from '../component/Styled'
 import { UserContext } from '../context/userContext'
-import {reducer} from '../reducer/formReducer'
+import reducer from '../reducer/formReducer'
 import TextInputWithTitle from '../component/TextInputWithTitle'
 import UpdateUser from '../../graphql/mutation/updateUser.gql'
 import DeleteUser from '../../graphql/mutation/deleteUser.gql'
 import { useMutation } from '@apollo/client'
 import Button from '../component/Button'
-import {ModalControlContext} from '../context/ModalControlContext'
 import styled from 'styled-components/native'
+import {ModalControlContext} from '../context/ModalControlContext'
 
 const EditProfile = () => {
   const {currentUser, setCurrentUser} = useContext(UserContext)
+  const {setAlertMessage, setInputTitle, setAction} = useContext(ModalControlContext)
   const [state, dispatch] = useReducer(reducer, currentUser.userAttributes || {})
-  const [password, setPassword] = useState('')
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [deleteUser, {data: message}] = useMutation(DeleteUser)
   const [updateUser, {loading, data: {updateUserData} = {}}] = useMutation(UpdateUser)
-  const {setAlertMessage, setAction, setInput, setOnChange} = useContext(ModalControlContext)
+  // const [alertMessage, setAlertMessage] = useState('')
 
   useEffect(() => {
     if(!loading && updateUserData) {
@@ -25,7 +25,7 @@ const EditProfile = () => {
     }
   },[updateUserData, loading])
 
-  const confirm_delete = () => {
+  const confirm_delete = (password) => {
     deleteUser({variables: {input :{password: password}}})
     setCurrentUser(null)
   }
@@ -33,7 +33,7 @@ const EditProfile = () => {
     delete state.__typename
     updateUser({
       variables: {input: {userAttributes: state}},
-      password: password
+      password: ''
     })
   }
 
@@ -81,14 +81,7 @@ const EditProfile = () => {
             onPress={()=> {
               setAlertMessage('Are you sure you want to delete your account?')
               setAction(() => confirm_delete)
-              setInput({
-                title: 'Confirm Password',
-                value: password,
-                onChange (value) {
-                  setPassword(value)
-                  debugger
-                }
-              })
+              setInputTitle('Confirm password')
             }}
             title='Delete account'
             width={120}

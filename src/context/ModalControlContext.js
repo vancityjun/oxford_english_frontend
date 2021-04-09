@@ -3,11 +3,9 @@ import React, { createContext, useState } from 'react'
 export const ModalControlContext = createContext()
 
 const ModalControlProvider = ({children}) => {
-  const [openModal, setOpenModal] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
   const [action, setAction] = useState()
-  const [onChange, setOnChange] = useState()
-  const [input, setInput] = useState({})
+  const [inputTitle, setInputTitle] = useState('')
 
   return (
     <ModalControlContext.Provider
@@ -18,10 +16,8 @@ const ModalControlProvider = ({children}) => {
         setAlertMessage,
         action,
         setAction,
-        input,
-        setInput,
-        onChange,
-        setOnChange
+        inputTitle,
+        setInputTitle
       }}
     >
       {children}

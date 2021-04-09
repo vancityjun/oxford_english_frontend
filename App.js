@@ -6,8 +6,10 @@ import client from './graphql/client'
 import StackNavigator from './src/navigator'
 import UserProvider from './src/context/userContext'
 import ModalControlProvider from './src/context/ModalControlContext'
+import initialize from './src/helper/DeviceHelper'
 
 const App = () => {
+  initialize()
   return (
     <ApolloProvider client={client}>
       <UserProvider>

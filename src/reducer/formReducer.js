@@ -1,3 +1,5 @@
-export const reducer = (state, {target}) => {
+const reducer = (state, {target}) => {
   return {...state, ...target}
 }
+
+export default reducer

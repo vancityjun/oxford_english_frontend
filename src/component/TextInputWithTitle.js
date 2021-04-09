@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { Inner, TextSmall, globalStyles, TextInput, TextInputTitle } from './Styled'
+import { Inner, globalStyles, TextInput, TextInputTitle } from './Styled'
+import { isDesktop } from '../helper/DeviceHelper'
 
 const TextInputWithTitle = ({
   title, 
@@ -27,6 +28,7 @@ const TextInputWithTitle = ({
         onBlur={() => setFocus(false)}
         multiline={multiline}
         autoFocus={autoFocus}
+        isDesktop={isDesktop}
       />
     </Inner>
   )

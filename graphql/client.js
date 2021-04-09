@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
-import isDesktop from '../src/helper/DeviceHelper'
+import {isDesktop} from '../src/helper/DeviceHelper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const httpLink = createHttpLink({
@@ -10,7 +10,7 @@ const httpLink = createHttpLink({
 
 const getToken = async () => {
   let token
-  if (await isDesktop()) {
+  if (isDesktop) {
     token = document.cookie.split('; ').find(row => row.startsWith('token='))
   } else {
     token = await AsyncStorage.getItem('@token')

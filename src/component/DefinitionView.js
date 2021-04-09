@@ -8,7 +8,7 @@ import { UserContext } from '../context/userContext'
 import { useMutation } from '@apollo/client'
 import { CreateDefinition } from '../../graphql/mutation/createDefinition.gql'
 import { exampleReducer } from '../reducer/exampleReducer'
-import { reducer } from '../reducer/formReducer'
+import reducer from '../reducer/formReducer'
 import { Row } from './Styled'
 import Button from './Button'
 
