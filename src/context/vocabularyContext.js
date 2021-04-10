@@ -12,11 +12,13 @@ const VocabularyProvider = ({ children }) => {
   const [after, setAfter] = useState(null)
   const [viewOptions, setViewOptions] = useState([])
   const [page, setPage] = useState(1)
+  const [first, setFirst] = useState(perPage)
+  const [last, setLast] = useState(perPage)
 
   const { loading, error, data: {vocabularies} = {} } = useQuery(Vocabularies, {
     variables: {
-      first: perPage,
-      last: perPage,
+      first: first,
+      last: last,
       levels: levels,
       after: after,
       before: before
@@ -35,20 +37,20 @@ const VocabularyProvider = ({ children }) => {
     }
   },[loading, vocabularies])
 
-  const random = (items) => {
-    return items[Math.floor(Math.random() * items.length) ]
-  }
-
   const previous = () => {
     setPage(page - 1)
     setBefore(vocabularies.pageInfo.startCursor)
     setAfter(null)
+    setFirst(null)
+    setLast(perPage)
   }
 
   const next = () => {
     setPage(page + 1)
     setAfter(vocabularies.pageInfo.endCursor)
     setBefore(null)
+    setLast(null)
+    setFirst(perPage)
   }
 
   return (
