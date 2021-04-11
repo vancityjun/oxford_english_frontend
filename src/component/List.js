@@ -4,7 +4,7 @@ import {VocabularyContext} from '../context/vocabularyContext'
 import VocabularyItem from './VocabularyItem'
 import Levels from './Levels'
 import TopInterface from './list/TopInterface'
-import {FlexWrap, TextSmall} from './Styled'
+import {FlexWrap} from './Styled'
 import Button from './Button'
 
 const List = () => {
@@ -18,7 +18,6 @@ const List = () => {
     } = {},
     previous,
     next,
-    page
   } = useContext(VocabularyContext)
 
   return (
@@ -32,7 +31,6 @@ const List = () => {
       />
       <FlexWrap justifyContent='space-evenly'>
         <Button onPress={() => previous()} title="<" disabled={!hasPreviousPage} />
-        <TextSmall>{page}</TextSmall>
         <Button onPress={() => next()} title=">" disabled={!hasNextPage}/>
       </FlexWrap>
     </View>

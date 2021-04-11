@@ -4,7 +4,7 @@ export const ModalControlContext = createContext()
 
 const ModalControlProvider = ({children}) => {
   const [alertMessage, setAlertMessage] = useState('')
-  const [action, setAction] = useState()
+  const [action, setAction] = useState(null)
   const [inputTitle, setInputTitle] = useState('')
 
   return (

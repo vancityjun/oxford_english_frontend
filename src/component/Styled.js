@@ -51,7 +51,14 @@ export const Row = styled(FlexWrap)`
 `
 export const TextMedium = styled.Text`
   font-size: ${font_medium}
-  color: ${({light}) => light ? medium_grey : dark_grey}
+  color: ${({light, warn}) => {
+    if (light) {
+      return medium_grey
+    } else if (warn) {
+      return warn_red
+    }
+    return dark_grey
+  }}
   margin-right: ${({margin_right}) => margin_right || 0}px
   line-height: 26px
 `

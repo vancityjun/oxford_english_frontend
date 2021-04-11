@@ -8,14 +8,13 @@ import {ModalControlContext} from '../context/ModalControlContext'
 
 const Alert = ({alertMessage}) => {
   const [value, setValue] = useState('')
-  const {action, inputTitle, setInputTitle, setAlertMessage} = useContext(ModalControlContext)
+  const {action, inputTitle, setInputTitle, setAlertMessage, setAction} = useContext(ModalControlContext)
   
-  console.log(value )
-  console.log(value )
   const close = () => {
     setValue('')
     setInputTitle('')
     setAlertMessage('')
+    setAction(null)
   }
   return (
     <Wrap isDesktop={isDesktop} >
@@ -26,25 +25,25 @@ const Alert = ({alertMessage}) => {
           onChangeText={(value) => setValue(value)}
           value={value}
           autoFocus
+          secureTextEntry
         />
       }
       <FlexWrap>
-        <Button 
-          title='Cancel' 
-          onPress={() => close()} 
-          background={false}
-          width='50%'
-        />
         <Button
+          title={action ? 'Cancel' : 'Ok'}
+          onPress={() => close()}
+          width={action ? '50%' : '100%'}
+        />
+        {!!action && <Button
           title='Ok'
           onPress={() => {
             action(value)
             close()
           }}
-          background={false}
           width='50%'
+          active
           disabled={!(!inputTitle || (value && inputTitle))}
-        />
+        />}
       </FlexWrap>
     </Wrap>
   )

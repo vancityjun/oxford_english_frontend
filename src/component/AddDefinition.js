@@ -65,13 +65,13 @@ const AddDefinition = ({
         />
       </Inner>
       <Inner>
-        <Flex>
+        <FlexWrap justifyContent='space-between'>
           <TextSmall>Examples</TextSmall>
           <Button onPress={() => examplesDispatch({type: 'add'})} title='+' />
-        </Flex>
+        </FlexWrap>
         {examples?.map((example, index) =>
           !example._destroy &&
-          <Flex>
+          <ExampleWrap>
             <TextInputWithTitle
               onChangeText={value => examplesDispatch({index: index, value: value})}
               value={example.content}
@@ -82,26 +82,26 @@ const AddDefinition = ({
               style={globalStyles.content}
             />
             <Button onPress={() => examplesDispatch({type: 'remove', index: index})} title='-' />
-          </Flex>
+          </ExampleWrap>
         )}
       </Inner>
       <Inner>
-        <Flex>
+        <FlexWrap justifyContent='space-between'>
           <Button onPress={()=> cancel()} title='Cancel' width={120} />
           <Button onPress={() => submit()} title='Submit' active width={120} disabled={!content} />
-        </Flex>
+        </FlexWrap>
       </Inner>
     </>
   )
 }
 
-const Flex = styled.View`
-  display: flex
+const ExampleWrap = styled(FlexWrap)`
   flex-flow: row
   justify-content: space-between
   align-items: center
   width: 100%
   position: relative
+  padding-right: 30px
 `
 
 export default AddDefinition

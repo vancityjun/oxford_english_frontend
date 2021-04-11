@@ -10,16 +10,18 @@ import Button from '../component/Button'
 import styled from 'styled-components/native'
 import {ModalControlContext} from '../context/ModalControlContext'
 
-const EditProfile = () => {
+const EditProfile = ({navigation}) => {
   const {currentUser, setCurrentUser} = useContext(UserContext)
   const {setAlertMessage, setInputTitle, setAction} = useContext(ModalControlContext)
-  const [state, dispatch] = useReducer(reducer, currentUser.userAttributes || {})
+  const [state, dispatch] = useReducer(reducer, {...currentUser.userAttributes})
   const [passwordConfirm, setPasswordConfirm] = useState('')
+  const [newPassword, setNewPassword] = useState('')
   const [deleteUser, {data: message}] = useMutation(DeleteUser)
   const [updateUser, {loading, data: {updateUserData} = {}}] = useMutation(UpdateUser)
-  // const [alertMessage, setAlertMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
+    setErrorMessage('')
     if(!loading && updateUserData) {
       setCurrentUser(updateUserData.user)
     }
@@ -28,12 +30,30 @@ const EditProfile = () => {
   const confirm_delete = (password) => {
     deleteUser({variables: {input :{password: password}}})
     setCurrentUser(null)
+    navigation.navigate('Main')
   }
-  const update = () => {
+
+  const submit = () => {
+    if (newPassword !== passwordConfirm) {
+      return setErrorMessage('Passwords are not matching')
+    }
+    if (newPassword) {
+      setAlertMessage('Confirm your password to change the password')
+      setAction(() => update)
+      setInputTitle('Confirm password')
+    } else {
+      update()
+    }
+  }
+
+  const update = (password) => {
     delete state.__typename
     updateUser({
-      variables: {input: {userAttributes: state}},
-      password: ''
+      variables: {input: {
+        userAttributes: state,
+        newPassword: newPassword,
+        password: password
+      }}
     })
   }
 
@@ -63,17 +83,18 @@ const EditProfile = () => {
       </FlexWrap>
       <TextInputWithTitle
         title="Change password"
-        onChangeText={value => dispatch({target: {password: value}})}
-        value={state.password}
+        onChangeText={value => setNewPassword(value)}
+        value={newPassword}
         maxLength={20}
-        secureTextEntry={true}
+        secureTextEntry
       />
       <TextInputWithTitle
-        title="Password confirm"
+        title="Confirm new password"
         onChangeText={value => setPasswordConfirm(value)}
         value={passwordConfirm}
         maxLength={20}
-        secureTextEntry={true}
+        secureTextEntry
+        errorMessage={errorMessage}
       />
       <Inner>
         <FlexWrap justifyContent='space-evenly'>
@@ -88,7 +109,11 @@ const EditProfile = () => {
             background={false}
             warn
           />
-          <Button onPress={() => update()} title='Submit' active width={120} />
+          <Button
+            onPress={() => submit()}
+            title='Submit' active width={120}
+            disabled={newPassword && !(newPassword && passwordConfirm)}
+          />
         </FlexWrap>
       </Inner>
     </Wrap>

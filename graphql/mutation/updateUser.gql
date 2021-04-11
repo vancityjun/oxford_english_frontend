@@ -5,5 +5,7 @@ mutation UpdateUser ($input: UpdateUserInput!) {
     user{
       ...UserFields
     }
+    message
+    errors
   }
 }

@@ -11,7 +11,6 @@ const VocabularyProvider = ({ children }) => {
   const [before, setBefore] = useState(null)
   const [after, setAfter] = useState(null)
   const [viewOptions, setViewOptions] = useState([])
-  const [page, setPage] = useState(1)
   const [first, setFirst] = useState(perPage)
   const [last, setLast] = useState(perPage)
 
@@ -38,7 +37,6 @@ const VocabularyProvider = ({ children }) => {
   },[loading, vocabularies])
 
   const previous = () => {
-    setPage(page - 1)
     setBefore(vocabularies.pageInfo.startCursor)
     setAfter(null)
     setFirst(null)
@@ -46,7 +44,6 @@ const VocabularyProvider = ({ children }) => {
   }
 
   const next = () => {
-    setPage(page + 1)
     setAfter(vocabularies.pageInfo.endCursor)
     setBefore(null)
     setLast(null)
@@ -62,7 +59,6 @@ const VocabularyProvider = ({ children }) => {
         perPage,
         viewOptions,
         levels,
-        page,
         setLevels,
         setPerPage,
         setOrder,

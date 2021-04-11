@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Inner, globalStyles, TextInput, TextInputTitle } from './Styled'
+import { Inner, globalStyles, TextInput, TextInputTitle, TextSmall } from './Styled'
 import { isDesktop } from '../helper/DeviceHelper'
 
 const TextInputWithTitle = ({
@@ -10,7 +10,9 @@ const TextInputWithTitle = ({
   secureTextEntry = false,
   multiline,
   autoFocus,
-  width
+  width,
+  errorMessage,
+  numberOfLines
 }) => {
   const [focus, setFocus] = useState(false)
 
@@ -29,7 +31,9 @@ const TextInputWithTitle = ({
         multiline={multiline}
         autoFocus={autoFocus}
         isDesktop={isDesktop}
+        numberOfLines={numberOfLines}
       />
+      {!!errorMessage && <TextSmall warn>{errorMessage}</TextSmall>}
     </Inner>
   )
 }

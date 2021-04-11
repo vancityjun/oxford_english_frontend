@@ -56,6 +56,7 @@ const Touchable = styled.TouchableOpacity`
   min-width: ${({width}) => width || '30px'}
   min-height: ${({width, height}) => width ? height || '36px' : '30px'}
   padding: 5px 10px
+  ${({disabled}) => disabled && 'opacity: .7'}
 `
 
 export default Button

@@ -5,5 +5,6 @@ mutation RegisterMutation($input: RegisterInput!) {
     user {
       ...UserFields
     }
+    errors
   }
 }
