@@ -71,14 +71,13 @@ const AddDefinition = ({
         </FlexWrap>
         {examples?.map((example, index) =>
           !example._destroy &&
-          <ExampleWrap>
+          <ExampleWrap key={index}>
             <TextInputWithTitle
               onChangeText={value => examplesDispatch({index: index, value: value})}
               value={example.content}
               multiline
               numberOfLines={4}
               maxLength={100}
-              key={index}
               style={globalStyles.content}
             />
             <Button onPress={() => examplesDispatch({type: 'remove', index: index})} title='-' />

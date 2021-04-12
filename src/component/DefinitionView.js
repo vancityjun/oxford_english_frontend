@@ -33,9 +33,10 @@ const DefinitionView = ({vocabularyId, pos}) => {
     setOpenField(false)
   }
 
-  const { loading, error, data: {definitions} = {} } = useQuery(Definitions, {
-    variables: { vocabularyId: vocabularyId }
-  })
+  const variables = {variables: { vocabularyId: vocabularyId }}
+  const fetchDefinitions = {query: Definitions, ...variables}
+
+  const { loading, error, data: {definitions} = {} } = useQuery(Definitions, variables)
 
   if(loading) return <Text>loading</Text>
   if(error) return <Text>{error.message}</Text>
@@ -43,10 +44,19 @@ const DefinitionView = ({vocabularyId, pos}) => {
   return (
     <Row>
       {data &&
-        <DefinitionItem item={data.createDefinition.definition} currentUser={currentUser} />
+        <DefinitionItem
+          item={data.createDefinition.definition}
+          currentUser={currentUser}
+          refetchDefinitions={fetchDefinitions}
+        />
       }
       {definitions.edges.map(({node, cursor}) =>
-        <DefinitionItem item={node} key={cursor} currentUser={currentUser} />
+        <DefinitionItem
+          item={node}
+          key={cursor}
+          currentUser={currentUser}
+          refetchDefinitions={fetchDefinitions}
+        />
       )}
       {openField ?
         <AddDefinition 

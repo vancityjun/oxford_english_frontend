@@ -10,7 +10,7 @@ import reducer from '../reducer/formReducer'
 import styled from 'styled-components/native'
 import {ModalControlContext} from '../context/ModalControlContext'
 
-const DefinitionItem = ({item, currentUser}) => {
+const DefinitionItem = ({item, currentUser, refetchDefinitions}) => {
   const [editable, setEditable] = useState(false)
   const [updateDefinition] = useMutation(UpdateDefinition)
   const [deleteDefinition] = useMutation(DeleteDefinition)
@@ -34,7 +34,10 @@ const DefinitionItem = ({item, currentUser}) => {
   }
 
   const confirm_delete = () => {
-    deleteDefinition({variables: {input: {id: item.id}}})
+    deleteDefinition({
+      variables: {input: {id: item.id}},
+      refetchQueries: () => [refetchDefinitions]
+    })
   }
 
   return (
@@ -49,9 +52,9 @@ const DefinitionItem = ({item, currentUser}) => {
             cancel={() => setEditable(false)}
           />
         : [
-          <Definition item={item} />,
+          <Definition item={item} key='definition' />,
           (item.user.id === currentUser?.id &&
-            <FlexWrap justifyContent="space-between">
+            <FlexWrap justifyContent="space-between" key='button'>
               <TooltipButton menu={[
                 {title: 'Edit', onPress: () => {
                   setEditable(true)
