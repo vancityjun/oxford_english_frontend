@@ -13,6 +13,7 @@ const VocabularyProvider = ({ children }) => {
   const [viewOptions, setViewOptions] = useState([])
   const [first, setFirst] = useState(perPage)
   const [last, setLast] = useState(perPage)
+  const [hasNote, setHasNote] = useState(false)
 
   const { loading, error, data: {vocabularies} = {} } = useQuery(Vocabularies, {
     variables: {
@@ -20,7 +21,8 @@ const VocabularyProvider = ({ children }) => {
       last: last,
       levels: levels,
       after: after,
-      before: before
+      before: before,
+      hasNote: hasNote
     }
   })
 
@@ -59,11 +61,13 @@ const VocabularyProvider = ({ children }) => {
         perPage,
         viewOptions,
         levels,
+        hasNote,
         setLevels,
         setPerPage,
         setOrder,
         previous,
-        next
+        next,
+        setHasNote
       }}
     >
       {children}

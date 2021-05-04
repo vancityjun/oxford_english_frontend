@@ -3,6 +3,8 @@ import { View } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
 import {VocabularyContext} from '../../context/vocabularyContext'
 import {Row, TextSmall} from '../Styled'
+import Button from '../Button'
+import {UserContext} from '../../context/userContext'
 
 
 const TopInterface = () => {
@@ -10,8 +12,11 @@ const TopInterface = () => {
     perPage,
     setPerPage,
     viewOptions,
-    setOrder
+    setOrder,
+    hasNote,
+    setHasNote
   } = useContext(VocabularyContext)
+  const {currentUser} = useContext(UserContext)
 
   const orderOptions = [
     {label: 'unset', value: 'unset'},
@@ -41,6 +46,16 @@ const TopInterface = () => {
           placeholder={{}}
         />
       </View>
+      {currentUser && 
+        <Button 
+          onPress={() => setHasNote(!hasNote)}
+          outline={true} title='Show only studied'
+          active={hasNote}
+          width={44}
+          background={false}
+          height='auto'
+        />
+      }
     </Row>
   )
 }
