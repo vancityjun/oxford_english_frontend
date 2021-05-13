@@ -62,6 +62,7 @@ const VocabularyProvider = ({ children }) => {
         viewOptions,
         levels,
         hasNote,
+        order,
         setLevels,
         setPerPage,
         setOrder,
