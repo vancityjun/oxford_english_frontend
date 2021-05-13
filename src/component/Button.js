@@ -20,7 +20,7 @@ const Button = ({
     console.error('title is required!')
   }
   return (
-    <Touchable 
+    <Touchable
       onPress={() => onPress()}
       activeOpacity={.7}
       outline={outline}

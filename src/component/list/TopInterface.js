@@ -1,20 +1,22 @@
 import React, { useContext } from 'react'
 import { View } from 'react-native'
 import RNPickerSelect from 'react-native-picker-select'
-import {VocabularyContext} from '../../context/vocabularyContext'
 import {Row, TextSmall} from '../Styled'
 import Button from '../Button'
+import {VocabularyContext} from '../../context/vocabularyContext'
 import {UserContext} from '../../context/userContext'
+import { useNavigation } from '@react-navigation/native'
 
 
 const TopInterface = () => {
+  const navigation = useNavigation()
   const {
     perPage,
     setPerPage,
     viewOptions,
     setOrder,
     hasNote,
-    setHasNote
+    setHasNote,
   } = useContext(VocabularyContext)
   const {currentUser} = useContext(UserContext)
 
@@ -46,16 +48,22 @@ const TopInterface = () => {
           placeholder={{}}
         />
       </View>
-      {currentUser && 
+      {currentUser && <>
         <Button 
           onPress={() => setHasNote(!hasNote)}
-          outline={true} title='Show only studied'
+          outline={true}
+          title='Show only studied'
           active={hasNote}
-          width={44}
           background={false}
           height='auto'
         />
-      }
+        <Button 
+          onPress={() => navigation.navigate('CreateCollection')}
+          title='Create Study Plan'
+          active={true}
+          height='auto'
+        />
+        </>}
     </Row>
   )
 }

@@ -4,20 +4,17 @@ import { ApolloProvider } from '@apollo/client'
 import 'react-native-gesture-handler'
 import client from './graphql/client'
 import StackNavigator from './src/navigator'
-import UserProvider from './src/context/userContext'
-import ModalControlProvider from './src/context/ModalControlContext'
 import initialize from './src/helper/DeviceHelper'
+import ContextProviders from './src/context/ContextProviders'
 
 const App = () => {
   initialize()
   return (
     <ApolloProvider client={client}>
-      <UserProvider>
-      <ModalControlProvider>
+      <ContextProviders>
         <StackNavigator />
         <StatusBar style="auto" />
-      </ModalControlProvider>
-      </UserProvider>
+      </ContextProviders>
     </ApolloProvider>
   )
 }

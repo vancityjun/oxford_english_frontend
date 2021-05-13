@@ -6,6 +6,7 @@ import {
   Login,
   Profile,
   EditProfile,
+  CreateCollection
 } from '../screen'
 import {UserContext} from '../context/userContext'
 import {ModalControlContext} from '../context/ModalControlContext'
@@ -42,6 +43,7 @@ const StackNavigator = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Profile" component={Profile} />
         <Stack.Screen name="EditProfile" component={EditProfile} />
+        <Stack.Screen name="CreateCollection" component={CreateCollection} />
       </Stack.Navigator>
     </NavigationContainer>
   )
