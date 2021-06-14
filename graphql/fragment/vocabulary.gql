@@ -1,0 +1,15 @@
+# import './definition.gql'
+
+fragment VocabularyFields on Vocabulary {
+  id
+  word
+  level
+  pos
+  ox5000
+  note {
+    updatedAt
+    definitions {
+      ...DefinitionFields
+    }
+  }
+}

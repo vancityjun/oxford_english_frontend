@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { useQuery } from '@apollo/client'
 import CurrentUser from '../../graphql/query/currentUser.gql'
-import {isDesktop} from '../helper/DeviceHelper'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export const UserContext = createContext()

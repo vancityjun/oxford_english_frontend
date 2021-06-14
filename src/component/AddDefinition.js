@@ -4,20 +4,12 @@ import Button from './Button'
 import styled from 'styled-components/native'
 import RNPickerSelect from 'react-native-picker-select'
 import TextInputWithTitle from './TextInputWithTitle'
+import posOptions from '../others/pos'
 
 const languageCodes = [
   {label: 'English', value: 'en'},
   {label: 'Korean', value: 'kr'},
   {label: 'Japanese', value: 'jp'}
-]
-
-const forms = [
-  {label: 'noun', value: 'noun'},
-  {label: 'verb', value: 'verb'},
-  {label: 'adjective', value: 'adjective'},
-  {label: 'adverb', value: 'adverb'},
-  {label: 'preposition', value: 'preposition'},
-  {label: 'article', value: 'article'}
 ]
 
 const AddDefinition = ({
@@ -36,13 +28,15 @@ const AddDefinition = ({
     <>
       <Inner>
         <FlexWrap>
-          <TextSmall>Form:</TextSmall>
-          <RNPickerSelect
-            onValueChange={(value) => value ? definitionAttributesDispatch({target: {form: value}}) : null}
-            items={forms}
-            value={form}
-            placeholder={{}}
-          />
+          {form && <>
+            <TextSmall>Form:</TextSmall>
+            <RNPickerSelect
+              onValueChange={(value) => value ? definitionAttributesDispatch({target: {form: value}}) : null}
+              items={posOptions}
+              value={form}
+              placeholder={{}}
+            />
+          </>}
           <TextSmall>language:</TextSmall>
           <RNPickerSelect
             onValueChange={(value) => value ? definitionAttributesDispatch({target: {languageCodes: value}}) : null}
@@ -58,7 +52,7 @@ const AddDefinition = ({
           value={content}
           multiline
           numberOfLines={4}
-          maxLength={100}
+          maxLength={200}
           style={globalStyles.content}
           title='Definition'
           autoFocus
@@ -77,7 +71,7 @@ const AddDefinition = ({
               value={example.content}
               multiline
               numberOfLines={4}
-              maxLength={100}
+              maxLength={200}
               style={globalStyles.content}
             />
             <Button onPress={() => examplesDispatch({type: 'remove', index: index})} title='-' />

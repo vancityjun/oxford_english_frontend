@@ -1,0 +1,10 @@
+# import '../fragment/vocabulary.gql'
+
+mutation AddVocabulary($input: AddVocabularyInput!) {
+  addVocabulary(input: $input) {
+    vocabulary{
+      ...VocabularyFields
+    }
+    errors
+  }
+}
