@@ -17,6 +17,7 @@ const VocabularyItem = ({item}) => {
         </FlexWrap>
         <FlexWrap>
           {item.note && <TextSmall light margin_right={10}>{moment(item.note.updatedAt).fromNow()}</TextSmall>}
+          {item.celpip && <TextSmall margin_right={10}>Celpip</TextSmall>}
           <Level>{item.level}</Level>
         </FlexWrap>
       </></Row>

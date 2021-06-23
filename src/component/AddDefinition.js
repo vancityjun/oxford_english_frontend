@@ -28,7 +28,7 @@ const AddDefinition = ({
     <>
       <Inner>
         <FlexWrap>
-          {form && <>
+          {!!form && <>
             <TextSmall>Form:</TextSmall>
             <RNPickerSelect
               onValueChange={(value) => value ? definitionAttributesDispatch({target: {form: value}}) : null}

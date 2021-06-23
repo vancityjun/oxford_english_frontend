@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react'
+import React, { useReducer, useState, useEffect } from 'react'
 import { Page } from '../component/Styled'
 import AddDefinition from '../component/AddDefinition'
 import { useMutation } from '@apollo/client'
@@ -15,8 +15,9 @@ import styled from 'styled-components/native'
 const AddVocab = ({navigation}) => {
   const [word, setWord] = useState('')
   const [pos, setPos] = useState('')
+  const [level, setLevel] = useState('')
   const [celpip, setCelpip] = useState(true)
-  const [addVocabulary, { data }] = useMutation(AddVocabulary)
+  const [addVocabulary, { loading, data: { addVocabularyData } = {} }] = useMutation(AddVocabulary)
   const [examples, examplesDispatch] = useReducer(exampleReducer, [])
   const [definitionAttributes, definitionAttributesDispatch] = useReducer(reducer, {
     content: '',
@@ -24,13 +25,29 @@ const AddVocab = ({navigation}) => {
     languageCode: 'en'
   })
 
+  const levels = [
+    {label: 'a1', value: 'a1'},
+    {label: 'a2', value: 'a2'},
+    {label: 'b1', value: 'b1'},
+    {label: 'b2', value: 'b2'},
+    {label: 'c1', value: 'c1'},
+    {label: 'c2', value: 'c2'}
+  ]
+
+  useEffect(()=> {
+    if(!loading && addVocabularyData?.vocabulary){
+      navigation.goBack()
+    }
+  },[addVocabularyData])
+
   const submit = () => {
     const input = {
       word: word,
       pos: pos,
       celpip: celpip,
       definitionAttributes: definitionAttributes,
-      examples: examples
+      examples: examples,
+      level: level
     }
     addVocabulary({variables: {input: input}})
   }
@@ -49,6 +66,12 @@ const AddVocab = ({navigation}) => {
           items={posOptions}
           value={pos}
           placeholder={{label: 'part of speech'}}
+        />
+        <RNPickerSelect
+          onValueChange={(value) => setLevel(value)}
+          items={levels}
+          value={level}
+          placeholder={{label: 'level'}}
         />
         <Button
           onPress={() => setCelpip(!celpip)}

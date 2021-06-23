@@ -6,6 +6,7 @@ fragment VocabularyFields on Vocabulary {
   level
   pos
   ox5000
+  celpip
   note {
     updatedAt
     definitions {
