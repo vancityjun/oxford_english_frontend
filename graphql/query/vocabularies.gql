@@ -6,6 +6,7 @@ query Vocabularies(
   $levels: [String],
   $after: String,
   $before: String,
+  $keyword: String,
   $hasNote: Boolean
 ) {
   vocabularies(
@@ -14,6 +15,7 @@ query Vocabularies(
     levels: $levels,
     after: $after,
     before: $before,
+    keyword: $keyword,
     hasNote: $hasNote
   ) {
     totalCount

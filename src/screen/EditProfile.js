@@ -17,15 +17,16 @@ const EditProfile = ({navigation}) => {
   const [passwordConfirm, setPasswordConfirm] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [deleteUser, {data: message}] = useMutation(DeleteUser)
-  const [updateUser, {loading, data: {updateUserData} = {}}] = useMutation(UpdateUser)
+  const [updateUser, {loading, data: {updateUser: {user} = {}} = {}}] = useMutation(UpdateUser)
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
     setErrorMessage('')
-    if(!loading && updateUserData) {
-      setCurrentUser(updateUserData.user)
+    if(!loading && user) {
+      setCurrentUser(user)
+      navigation.goBack()
     }
-  },[updateUserData, loading])
+  },[user, loading])
 
   const confirm_delete = (password) => {
     deleteUser({variables: {input :{password: password}}})

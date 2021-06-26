@@ -17,7 +17,7 @@ const AddVocab = ({navigation}) => {
   const [pos, setPos] = useState('')
   const [level, setLevel] = useState('')
   const [celpip, setCelpip] = useState(true)
-  const [addVocabulary, { loading, data: { addVocabularyData } = {} }] = useMutation(AddVocabulary)
+  const [addVocabulary, { loading, data: { addVocabulary: {vocabulary} = {} } = {} }] = useMutation(AddVocabulary)
   const [examples, examplesDispatch] = useReducer(exampleReducer, [])
   const [definitionAttributes, definitionAttributesDispatch] = useReducer(reducer, {
     content: '',
@@ -34,11 +34,11 @@ const AddVocab = ({navigation}) => {
     {label: 'c2', value: 'c2'}
   ]
 
-  useEffect(()=> {
-    if(!loading && addVocabularyData?.vocabulary){
+  useEffect(() => {
+    if(!loading && vocabulary){
       navigation.goBack()
     }
-  },[addVocabularyData])
+  },[loading, vocabulary])
 
   const submit = () => {
     const input = {

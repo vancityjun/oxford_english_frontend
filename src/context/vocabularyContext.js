@@ -14,6 +14,7 @@ const VocabularyProvider = ({ children }) => {
   const [first, setFirst] = useState(perPage)
   const [last, setLast] = useState(perPage)
   const [hasNote, setHasNote] = useState(false)
+  const [keyword, setKeyword] = useState('')
 
   const { loading, error, data: {vocabularies} = {} } = useQuery(Vocabularies, {
     variables: {
@@ -22,7 +23,8 @@ const VocabularyProvider = ({ children }) => {
       levels: levels,
       after: after,
       before: before,
-      hasNote: hasNote
+      hasNote: hasNote,
+      keyword: keyword
     }
   })
 
@@ -63,12 +65,14 @@ const VocabularyProvider = ({ children }) => {
         levels,
         hasNote,
         order,
+        keyword,
         setLevels,
         setPerPage,
         setOrder,
         previous,
         next,
-        setHasNote
+        setHasNote,
+        setKeyword
       }}
     >
       {children}

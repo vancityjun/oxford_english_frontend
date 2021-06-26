@@ -6,6 +6,7 @@ import Levels from './Levels'
 import TopInterface from './list/TopInterface'
 import {FlexWrap} from './Styled'
 import Button from './Button'
+import SearchField from './list/SearchFIeld'
 
 const List = () => {
   const {
@@ -22,6 +23,7 @@ const List = () => {
 
   return (
     <View style={styles.container}>
+      <SearchField/>
       <TopInterface />
       <Levels/>
       <FlatList
