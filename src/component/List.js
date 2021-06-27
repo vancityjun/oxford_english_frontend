@@ -43,7 +43,7 @@ const List = () => {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
-    paddingBottom: 20
+    paddingBottom: 20,
   }
 })
 

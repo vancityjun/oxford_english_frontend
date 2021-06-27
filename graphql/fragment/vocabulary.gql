@@ -5,6 +5,7 @@ fragment VocabularyFields on Vocabulary {
   word
   level
   pos
+  link
   ox5000
   celpip
   note {

@@ -39,7 +39,9 @@ const TextInput = styled.TextInput`
 const Wrap = styled(FlexWrap)`
   flex-flow: row
   justify-content: space-between
-  padding: 5px
+  align-items: center
+  width: 100%
+  padding-right: 70px
 `
 
 

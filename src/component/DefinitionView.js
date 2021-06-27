@@ -11,8 +11,9 @@ import { exampleReducer } from '../reducer/exampleReducer'
 import reducer from '../reducer/formReducer'
 import { Row } from './Styled'
 import Button from './Button'
+import * as WebBrowser from 'expo-web-browser'
 
-const DefinitionView = ({vocabularyId, pos}) => {
+const DefinitionView = ({vocabularyId, pos, link}) => {
   const [openField, setOpenField] = useState(false)
   const {currentUser} = useContext(UserContext)
   const [createDefinition, { data }] = useMutation(CreateDefinition)
@@ -31,6 +32,12 @@ const DefinitionView = ({vocabularyId, pos}) => {
     }
     createDefinition({variables: {input: input}})
     setOpenField(false)
+  }
+
+  // dev & testing
+  const openLink = () => {
+    currentUser && setOpenField(true)
+    WebBrowser.openBrowserAsync(`https://www.oxfordlearnersdictionaries.com${link}`)
   }
 
   const variables = {variables: { vocabularyId: vocabularyId }}
@@ -58,6 +65,8 @@ const DefinitionView = ({vocabularyId, pos}) => {
           refetchDefinitions={fetchDefinitions}
         />
       )}
+      {/* dev & testing */}
+      <Button onPress={()=> openLink()} title='Open Dictionary' />
       {openField ?
         <AddDefinition 
           submit={submit}
@@ -67,7 +76,9 @@ const DefinitionView = ({vocabularyId, pos}) => {
           examples={examples}
           cancel={()=> setOpenField(false)}
         /> :
-        (currentUser && <Button onPress={()=> setOpenField(true)} title='Add Definitions' />)
+        // (currentUser && <Button onPress={()=> setOpenField(true)} title='Add Definitions' />)
+        // will decide whether enable this or keep external oxford dictionary later for production
+        null
       }
     </Row>
   )
