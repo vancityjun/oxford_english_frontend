@@ -69,7 +69,7 @@ const DefinitionView = ({vocabulary}) => {
       )}
       {/* dev & testing */}
       <Button onPress={()=> openLink()} title='Open Dictionary' />
-      {currentUser.admin &&
+      {currentUser?.admin &&
         <Button
           onPress={() => navigation.navigate('AddVocab', {item: vocabulary })}
           title='Edit Vocabulary'
