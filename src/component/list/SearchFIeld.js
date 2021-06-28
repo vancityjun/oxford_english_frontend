@@ -14,6 +14,8 @@ const SearchField = () => {
       <TextInput
         onChangeText={value => SetSearchValue(value)}
         value={searchValue}
+        clearButtonMode='while-editing'
+        spellCheck
       />
       <Button
         onPress={() => setKeyword(searchValue)}

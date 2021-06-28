@@ -20,12 +20,14 @@ const RegisterFields = ({
         title='First name'
         onChangeText={value => dispatch({target: {firstName: value}})}
         value={state.firstName}
+        textContentType='givenName'
       />
       <TextInputWithTitle
         title='Last name'
         onChangeText={value => dispatch({target: {lastName: value}})}
         value={state.lastName}
         errorMessage={errorMessage}
+        textContentType='familyName'
       />
     </>
   )

@@ -12,7 +12,11 @@ const TextInputWithTitle = ({
   autoFocus,
   width,
   errorMessage,
-  numberOfLines
+  numberOfLines,
+  autoCompleteType = null,
+  editable = true,
+  keyboardType = 'default',
+  textContentType = 'none'
 }) => {
   const [focus, setFocus] = useState(false)
 
@@ -32,6 +36,11 @@ const TextInputWithTitle = ({
         autoFocus={autoFocus}
         isDesktop={isDesktop}
         numberOfLines={numberOfLines}
+        autoCompleteType={autoCompleteType}
+        editable={editable}
+        keyboardType={keyboardType}
+        textContentType={textContentType}
+        blurOnSubmit
       />
       {!!errorMessage && <TextSmall warn>{errorMessage}</TextSmall>}
     </Inner>

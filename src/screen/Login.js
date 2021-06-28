@@ -68,6 +68,8 @@ const Login = ({navigation}) => {
         value={state.email}
         autoCompleteType='username'
         autoFocus
+        keyboardType='email-address'
+        textContentType='emailAddress'
       />
       <TextInputWithTitle
         title='Password'
@@ -75,6 +77,7 @@ const Login = ({navigation}) => {
         value={state.password}
         autoCompleteType='password'
         secureTextEntry={true}
+        textContentType='password'
       />
       {isRegister &&
         <RegisterFields
