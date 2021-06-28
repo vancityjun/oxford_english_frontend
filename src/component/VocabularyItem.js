@@ -5,7 +5,9 @@ import {TouchableHighlight} from 'react-native'
 import DefinitionView from '../component/DefinitionView'
 import moment from 'moment'
 
-const VocabularyItem = ({item: {word, pos, note, celpip, level, id, link}}) => {
+const VocabularyItem = ({item}) => {
+  const {word, pos, note, celpip, level} = item
+  console.log
   const [open, setOpen] = useState(false)
 
   return (
@@ -21,7 +23,7 @@ const VocabularyItem = ({item: {word, pos, note, celpip, level, id, link}}) => {
           <Level>{level}</Level>
         </FlexWrap>
       </></Row>
-      {open && <DefinitionView vocabularyId={+id} pos={pos} link={link} />}
+      {open && <DefinitionView vocabulary={item} />}
     </>
   )
 }

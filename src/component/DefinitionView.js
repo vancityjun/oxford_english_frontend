@@ -12,21 +12,23 @@ import reducer from '../reducer/formReducer'
 import { Row } from './Styled'
 import Button from './Button'
 import * as WebBrowser from 'expo-web-browser'
+import { useNavigation } from '@react-navigation/native'
 
-const DefinitionView = ({vocabularyId, pos, link}) => {
+const DefinitionView = ({vocabulary}) => {
+  const navigation = useNavigation()
   const [openField, setOpenField] = useState(false)
   const {currentUser} = useContext(UserContext)
   const [createDefinition, { data }] = useMutation(CreateDefinition)
   const [examples, examplesDispatch] = useReducer(exampleReducer, [])
   const [definitionAttributes, definitionAttributesDispatch] = useReducer(reducer, {
     content: '',
-    form: pos,
+    form: vocabulary.pos,
     languageCode: 'en'
   })
 
   const submit = () => {
     const input = {
-      vocabularyId: vocabularyId,
+      vocabularyId: +vocabulary.id,
       definitionAttributes: definitionAttributes,
       examples: examples
     }
@@ -36,11 +38,11 @@ const DefinitionView = ({vocabularyId, pos, link}) => {
 
   // dev & testing
   const openLink = () => {
-    currentUser && setOpenField(true)
-    WebBrowser.openBrowserAsync(`https://www.oxfordlearnersdictionaries.com${link}`)
+    (currentUser && !definitions) && setOpenField(true)
+    WebBrowser.openBrowserAsync(`https://www.oxfordlearnersdictionaries.com${vocabulary.link}`)
   }
 
-  const variables = {variables: { vocabularyId: vocabularyId }}
+  const variables = {variables: { vocabularyId: +vocabulary.id }}
   const fetchDefinitions = {query: Definitions, ...variables}
 
   const { loading, error, data: {definitions} = {} } = useQuery(Definitions, variables)
@@ -67,6 +69,12 @@ const DefinitionView = ({vocabularyId, pos, link}) => {
       )}
       {/* dev & testing */}
       <Button onPress={()=> openLink()} title='Open Dictionary' />
+      {currentUser.admin &&
+        <Button
+          onPress={() => navigation.navigate('AddVocab', {item: vocabulary })}
+          title='Edit Vocabulary'
+        />
+      }
       {openField ?
         <AddDefinition 
           submit={submit}

@@ -72,7 +72,7 @@ export const TextSmall = styled(TextMedium)`
 `
 
 export const TextInputTitle = styled(TextSmall)`
-  color: ${({focus}) => focus ? primary_color : medium_grey}
+  color: ${({focus, editable}) => focus && editable ? primary_color : medium_grey}
 `
 
 export const ButtonTitle = styled(TextSmall)`
@@ -111,7 +111,7 @@ export const ModalStyle = styled.View`
 
 export const TextInput = styled.TextInput`
   border-bottom-width: 1px
-  border-bottom-color: ${({focus}) => focus ? primary_color : dark_grey}
+  border-bottom-color: ${({focus, editable}) => focus && editable ? primary_color : dark_grey}
   font-size: 16px
   background: #fff
   ${({isDesktop}) => isDesktop && 'outline-width: 0'}

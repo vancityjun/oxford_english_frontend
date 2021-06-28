@@ -12,10 +12,11 @@ import posOptions from '../others/pos'
 import {FlexWrap} from '../component/Styled'
 import styled from 'styled-components/native'
 
-const AddVocab = ({navigation}) => {
-  const [word, setWord] = useState('')
-  const [pos, setPos] = useState('')
-  const [level, setLevel] = useState('')
+const AddVocab = ({navigation, route}) => {
+  const {item} = route.params || {}
+  const [word, setWord] = useState(item?.word)
+  const [pos, setPos] = useState(item?.pos)
+  const [level, setLevel] = useState(item?.level)
   const [celpip, setCelpip] = useState(true)
   const [addVocabulary, { loading, data: { addVocabulary: {vocabulary} = {} } = {} }] = useMutation(AddVocabulary)
   const [examples, examplesDispatch] = useReducer(exampleReducer, [])
@@ -59,6 +60,7 @@ const AddVocab = ({navigation}) => {
         onChangeText={value => setWord(value)}
         value={word}
         maxLength={30}
+        editable={!item}
       />
       <FlexWrap justifyContent='space-between'>
         <RNPickerSelect
@@ -66,12 +68,14 @@ const AddVocab = ({navigation}) => {
           items={posOptions}
           value={pos}
           placeholder={{label: 'part of speech'}}
+          disabled={item}
         />
         <RNPickerSelect
           onValueChange={(value) => setLevel(value)}
           items={levels}
           value={level}
           placeholder={{label: 'level'}}
+          disabled={item}
         />
         <Button
           onPress={() => setCelpip(!celpip)}
