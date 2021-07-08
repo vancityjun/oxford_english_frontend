@@ -1,11 +1,19 @@
 import React, {useReducer, useEffect, useContext} from 'react'
 import styled from 'styled-components/native'
 import { FlexWrap, globalVariable } from './Styled'
-import {reducer, initialState} from '../reducer/levelReducer'
+import reducer from '../reducer/multipleSelectReducer'
 import {VocabularyContext} from '../context/vocabularyContext'
 import Button from '../component/Button'
 
 const Levels = () => {
+  const initialState = [
+    { title: 'a1', active: false },
+    { title: 'a2', active: false },
+    { title: 'b1', active: false },
+    { title: 'b2', active: false },
+    { title: 'c1', active: false }
+  ]
+  
   const [state, dispatch] = useReducer(reducer, initialState)
   const {levels, setLevels} = useContext(VocabularyContext)
 

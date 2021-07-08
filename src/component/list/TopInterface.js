@@ -59,9 +59,10 @@ const TopInterface = () => {
         />
         <Button 
           onPress={() => navigation.navigate('CreateCollection')}
-          title='Create study plan'
+          title='Create study plan with result'
           active={true}
           height='auto'
+          background={false}
         />
         {currentUser.admin && 
           <Button
